@@ -10,6 +10,7 @@ Robocup Hibikino-Musashi のROS2用パッケージ
   - README.md（このファイル）
   - hardware（センサ，アクチュエータなど外部デバイス用パッケージディレクトリ）  
   - perception（画像処理や物体認識など知覚系パッケージ）  
-  - localization（自己位置推定用パッケージディレクトリ）  
+  - localization（自己位置推定用パッケージディレクトリ） 
+  - behavior（行動決定，意思決定用パッケージディレクトリ）   
 
 ## 

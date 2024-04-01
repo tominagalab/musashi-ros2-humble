@@ -1,5 +1,5 @@
 <launch>
   <node pkg="musashi_camera" exec="node_musashi_camera">
-    <param from="$(find-pkg-share musashi_camera)/" />
+    <param from="$(find-pkg-share musashi_camera)/config/params.yaml" />
   </node>
 </launch>

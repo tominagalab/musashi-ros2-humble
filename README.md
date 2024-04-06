@@ -13,4 +13,8 @@ Robocup Hibikino-Musashi のROS2用パッケージ
   - localization（自己位置推定用パッケージディレクトリ） 
   - behavior（行動決定，意思決定用パッケージディレクトリ）   
 
-## 
+## パッケージ作成コマンド例  
+### pythonパッケージ　　
+``ros2 pkg create ament_python ``  
+### C++パッケージ　　
+``ros2 pkg create ament_cmake ``  

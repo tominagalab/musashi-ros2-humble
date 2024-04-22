@@ -10,30 +10,18 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
-find_package(musashi_movebase REQUIRED)
 
 # add executables
 add_executable(maxon_epos_manager src/node_maxon_epos_manager.cpp)
 
 # ament dependencies
 ament_target_dependencies(maxon_epos_manager 
-  rclcpp
-  musashi_movebase)
+  rclcpp)
 
 # install
 install(TARGETS
   maxon_epos_manager
   DESTINATION lib/${PROJECT_NAME})
-
-set(msg_files
-  "msg/MotorState.msg"
-  "msg/MotorStates.msg"
-)
-
-rosidl_generate_interfaces(${PROJECT_NAME}
-  ${msg_files}
-  DEPENDENCIES builtin_interfaces std_msgs
-)
 
 ament_export_dependencies(rosidl_default_runtime)
 

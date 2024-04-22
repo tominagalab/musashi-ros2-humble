@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(musashi_move_base)
+project(musashi_movebase)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -21,7 +21,6 @@ ament_target_dependencies(maxon_epos_manager rclcpp)
 install(TARGETS
   maxon_epos_manager
   DESTINATION lib/${PROJECT_NAME})
-
 
 set(msg_files
   "msg/MotorState.msg"

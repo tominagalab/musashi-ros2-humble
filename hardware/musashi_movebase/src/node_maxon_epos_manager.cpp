@@ -2,7 +2,8 @@
 #include <functional>
 #include <memory>
 
-#include "musashi_msgs/msg/motor_state.h"
+#include "musashi_msgs/msg/motor_state.hpp"
+#include "musashi_msgs/msg/motor_states.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 using namespace std::chrono_literals;

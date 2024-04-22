@@ -2,8 +2,8 @@
 #include <functional>
 #include <memory>
 
+#include "musashi_msgs/msg/motor_state.h"
 #include "rclcpp/rclcpp.hpp"
-#include "musashi_movebase/msg/motor_state.msg"
 
 using namespace std::chrono_literals;
 
@@ -27,6 +27,7 @@ class MaxonEposManager : public rclcpp::Node {
   }
 
  private:
+  // タイマコールバック関数
   void timer_callback() { RCLCPP_INFO(this->get_logger(), "callback"); }
 };
 

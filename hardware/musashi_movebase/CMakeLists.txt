@@ -10,12 +10,15 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
+find_package(musashi_movebase REQUIRED)
 
 # add executables
 add_executable(maxon_epos_manager src/node_maxon_epos_manager.cpp)
 
 # ament dependencies
-ament_target_dependencies(maxon_epos_manager rclcpp)
+ament_target_dependencies(maxon_epos_manager 
+  rclcpp
+  musashi_movebase)
 
 # install
 install(TARGETS

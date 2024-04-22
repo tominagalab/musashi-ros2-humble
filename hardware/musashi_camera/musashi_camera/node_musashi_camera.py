@@ -7,47 +7,71 @@ import cv2
 import neoapi
 
 class Musashi_Camera(Node):
+    # コンストラクタ
     def __init__(self):
+        # 親クラス（rclpy.nodeのNodeクラス）のコンストラクタ呼び出し
+        # 引数：ノード名
         super().__init__('node_musashi_camera')
         
-        # declare publisher
+        # パブリッシャーの作成
+        # create_publisher関数は親クラスが持っている
         self.image_pub = self.create_publisher(Image, '/raw_image', 3)
         
-        # declariation prameters
+        # パラメータの定義
+        # 引数：パラメータ名，初期値
         self.declare_parameter('interval', 0.1)
 
-        # load parameters
+        # パラメータの読み込み
         interval = self.get_parameter('interval').get_parameter_value().double_value 
 
-        # neoapi
-        # create camera instance & connect
+        # neoapiのカメラインスタンスを作成する
         self.camera = neoapi.Cam()
+        # カメラへ接続
         self.camera.Connect()
 
-	# cv_bridge
+    	# opencvの画像型をROSのメッセージ型に変換するためのcv_bridgeインスタンスを作成
         self.bridge = CvBridge()
 
-        # start timer_callback        
+        # タイマコールバックの設定
+        # Nodeクラスがcreate_timer関数を持っている
+        # 引数：周期(ms), コールバック関数
         self.timer = self.create_timer(interval, self.timer_callback)
         
+    # コールバック関数定義
+    # intervalの値に従って呼び出される  
     def timer_callback(self):
         self.get_logger().info('timer callback')
         
-        # get image from camera
+        # カメラから画像取得
         image = self.camera.GetImage()
 
         if not image.IsEmpty():        
-            # 
+            # OpenCVのMat型の配列の並びに変更する
             mat = image.GetNPArray().reshape(image.GetHeight(), image.GetWidth())
+            # カメラから来た画像のデータフォーマット:BayerRG
+            # ROSで使いたい画像のデータフォーマット:BGR
+            # → cv2.cvtColorでデータフォーマットを変換する
             mat = cv2.cvtColor(mat, cv2.COLOR_BayerRG2BGR)
+            
+            # パブリッシュの用意
+            # sensor_msgs.msgのImage型に変換（cv_bridgeを使う）
             img_msg = self.bridge.cv2_to_imgmsg(mat, 'bgr8')
+            # パブリッシュ
             self.image_pub.publish(img_msg)
 
         
 def main(args=None):
+    # 初期化
     rclpy.init(args=args)
+    
+    # ノード実態の作成
+    # Musashi_Cameraオブジェクトのインスタンスを作成
     node = Musashi_Camera()
+    
+    # 処理ループ開始    
     rclpy.spin(node)
+
+    # spin関数を抜けたらノード削除
     node.destroy_node()
     rclpy.shutdown()
 

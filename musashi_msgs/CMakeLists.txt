@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(musashi_move_base)
+project(musashi_msgs)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -7,22 +7,10 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(rclcpp REQUIRED)
+find_package(rosidl_default_generators REQUIRED) # for create message
 find_package(std_msgs REQUIRED)
-find_package(rosidl_default_generators REQUIRED)
 
-# add executables
-add_executable(maxon_epos_manager src/node_maxon_epos_manager.cpp)
-
-# ament dependencies
-ament_target_dependencies(maxon_epos_manager rclcpp)
-
-# install
-install(TARGETS
-  maxon_epos_manager
-  DESTINATION lib/${PROJECT_NAME})
-
-
+# set "msg_files" list
 set(msg_files
   "msg/MotorState.msg"
   "msg/MotorStates.msg"

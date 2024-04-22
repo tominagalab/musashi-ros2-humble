@@ -6,7 +6,7 @@ from cv_bridge import CvBridge, CvBridgeError
 import cv2
 import neoapi
 
-class Musashi_Camera(Node):
+class MusashiCamera(Node):
     # コンストラクタ
     def __init__(self):
         # 親クラス（rclpy.nodeのNodeクラス）のコンストラクタ呼び出し
@@ -66,7 +66,7 @@ def main(args=None):
     
     # ノード実態の作成
     # Musashi_Cameraオブジェクトのインスタンスを作成
-    node = Musashi_Camera()
+    node = MusashiCamera()
     
     # 処理ループ開始    
     rclpy.spin(node)

@@ -12,17 +12,28 @@ find_package(std_msgs REQUIRED)
 find_package(musashi_msgs REQUIRED)
 
 # add executables
-add_executable(maxon_epos_manager src/node_maxon_epos_manager.cpp)
+add_executable(node_musashi_epos_manager src/node_musashi_epos_manager.cpp)
 
 # ament dependencies
-ament_target_dependencies(maxon_epos_manager 
+ament_target_dependencies(node_musashi_epos_manager 
   rclcpp
   musashi_msgs)
 
+# link libraries
+target_link_libraries(node_musashi_epos_manager EposCmd)
+
 # install
 install(TARGETS
-  maxon_epos_manager
+  node_musashi_epos_manager
   DESTINATION lib/${PROJECT_NAME})
+
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME})
+
+install(DIRECTORY
+  config
+  DESTINATION share/${PROJECT_NAME})
 
 ament_export_dependencies(rosidl_default_runtime)
 

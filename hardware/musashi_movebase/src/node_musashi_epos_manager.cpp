@@ -18,8 +18,7 @@ using namespace std::chrono_literals;
 class MaxonEposManager : public rclcpp::Node {
   // メンバ変数定義
  private:
-  std::vector<std::string> motor_names;  // モータ名の配列
-  rclcpp::TimerBase::SharedPtr _timer;   // タイマインスタンス
+  rclcpp::TimerBase::SharedPtr _timer;  // タイマインスタンス
 
   // メンバ関数定義
  public:
@@ -27,12 +26,8 @@ class MaxonEposManager : public rclcpp::Node {
   MaxonEposManager(const rclcpp::NodeOptions &options)
       : Node("node_musashi_epos_manager", options) {
     // パラメータ宣言
-
-    // パラメータデバッグ
-    motor_names = get_parameter("motor_names").as_string_array();
-    BOOST_FOREACH (std::string motor_name, motor_names) {
-      RCLCPP_DEBUG(get_logger(), "%s", motor_name.c_str());
-    }
+    std::vector<std::string> motor_names =
+        get_parameter("motor_names").as_string_array();
 
     // EPOS初期化，設定
     BOOST_FOREACH (std::string motor_name, motor_names) {
@@ -46,13 +41,26 @@ class MaxonEposManager : public rclcpp::Node {
       int baudrate = get_parameter(motor_name + ".baudrate").as_int();
       int timeout = get_parameter(motor_name + ".timeout").as_int();
 
-      RCLCPP_INFO(get_logger(), "Device   :\t%s", sDevice.c_str());
-      RCLCPP_INFO(get_logger(), "Protocol :\t%s", sProtocol.c_str());
-      RCLCPP_INFO(get_logger(), "Interface:\t%s", sInterface.c_str());
-      RCLCPP_INFO(get_logger(), "Port     :\t%s", sPort.c_str());
-      RCLCPP_INFO(get_logger(), "NodeID   :\t%d", sNodeId);
-      RCLCPP_INFO(get_logger(), "Baudrate :\t%d", baudrate);
-      RCLCPP_INFO(get_logger(), "Timeout  :\t%d", timeout);
+      RCLCPP_INFO(get_logger(), "Loading device : %s", motor_name.c_str());
+      RCLCPP_INFO(get_logger(), "  Device   :%s", sDevice.c_str());
+      RCLCPP_INFO(get_logger(), "  Protocol :%s", sProtocol.c_str());
+      RCLCPP_INFO(get_logger(), "  Interface:%s", sInterface.c_str());
+      RCLCPP_INFO(get_logger(), "  Port     :%s", sPort.c_str());
+      RCLCPP_INFO(get_logger(), "  NodeID   :%d", sNodeId);
+      RCLCPP_INFO(get_logger(), "  Baudrate :%d", baudrate);
+      RCLCPP_INFO(get_logger(), "  Timeout  :%d", timeout);
+
+      unsigned int error_code = 0;
+      void *handle = 0;
+      handle = VCS_OpenDevice(const_cast<char *>(sDevice.c_str()),
+                              const_cast<char *>(sProtocol.c_str()),
+                              const_cast<char *>(sInterface.c_str()),
+                              const_cast<char *>(sPort.c_str()), &error_code);
+
+      // if (errorCode != 0) {
+      //   RCLCPP_ERROR(get_logger(), "%d", errorCode);
+      //   return;
+      // }
     }
 
     // タイマ実態の作成．create_wall_timerはNodeクラス（親クラス）が持っている

@@ -19,6 +19,9 @@ ament_target_dependencies(node_musashi_epos_manager
   rclcpp
   musashi_msgs)
 
+# link libraries
+target_link_libraries(node_musashi_epos_manager EposCmd)
+
 # install
 install(TARGETS
   node_musashi_epos_manager

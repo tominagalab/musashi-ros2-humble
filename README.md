@@ -5,13 +5,15 @@ Robocup Hibikino-Musashi のROS2用パッケージ
 - Ubuntu 22.04  
 - ROS2 humble  
 
-## フォルダ構成  
+## ディレクトリ構成  
 - musashi-ros2-humble  
   - README.md（このファイル）
   - hardware（センサ，アクチュエータなど外部デバイス用パッケージディレクトリ）  
-  - perception（画像処理や物体認識など知覚系パッケージ）  
+  - perception（画像処理や物体認識など知覚系パッケージディレクトリ）  
   - localization（自己位置推定用パッケージディレクトリ） 
   - behavior（行動決定，意思決定用パッケージディレクトリ）   
+  - musashi_msgs（ROSメッセージ開発用パッケージディレクトリ）
+  - musashi_coachbox（コーチボックス開発用パッケージディレクトリ）
 
 ## パッケージ作成コマンド例  
 ### pythonパッケージ　　

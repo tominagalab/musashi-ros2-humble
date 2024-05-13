@@ -57,10 +57,10 @@ class MaxonEposManager : public rclcpp::Node {
                               const_cast<char *>(sInterface.c_str()),
                               const_cast<char *>(sPort.c_str()), &error_code);
 
-      // if (errorCode != 0) {
-      //   RCLCPP_ERROR(get_logger(), "%d", errorCode);
-      //   return;
-      // }
+      if (error_code != 0) {
+        RCLCPP_ERROR(get_logger(), "0X%8X", error_code);        
+        return;
+      }
     }
 
     // タイマ実態の作成．create_wall_timerはNodeクラス（親クラス）が持っている

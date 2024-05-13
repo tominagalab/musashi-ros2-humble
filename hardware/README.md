@@ -21,4 +21,9 @@ Maxon EPOS用ライブラリ
 1. ライブラリファイル（.hや.soなど）は/optディレクトリにコピーされているはず  
 1. soファイルは/usr/lib直下にコピーされているはず  
 1. udevファイルは/etc/udev/rule.d直下にコピーされているはず  
+#### リファレンス  
+EPOS Command Library https://www.maxongroup.com/medias/sys_master/8823917281310.pdf  
+#### エラーコード  
+エラーコードは8桁の16進数で得られる．16進数の値を読み取って，エラーの内容をEPOS Command Libraryから読み取って原因を探る必要がある.  
+
 

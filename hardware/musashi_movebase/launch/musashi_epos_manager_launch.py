@@ -6,7 +6,7 @@ import os
 
 def generate_launch_description():
   
-  param_files = '/home/ubuntu/colcon_ws/src/musashi-ros2-humble/hardware/musashi_movebase/config/musashi_movebase_config.yaml'
+  param_files = '/home/musashi/ros2_ws/src/musashi-ros2-humble/hardware/musashi_movebase/config/musashi_movebase_config.yaml'
   
   config = os.path.join(
     get_package_share_directory('musashi_movebase'),

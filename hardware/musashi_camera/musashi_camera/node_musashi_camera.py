@@ -26,8 +26,13 @@ class MusashiCamera(Node):
 
         # neoapiのカメラインスタンスを作成する
         self.camera = neoapi.Cam()
+
         # カメラへ接続
-        self.camera.Connect()
+        try:
+            self.camera.Connect()            
+        except neoapi.NotConnectedException as e:
+            pass
+
 
     	# opencvの画像型をROSのメッセージ型に変換するためのcv_bridgeインスタンスを作成
         self.bridge = CvBridge()

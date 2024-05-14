@@ -10,15 +10,15 @@ class CoachBoxWidget(QWidget):
   def __init__(self):
     super(CoachBoxWidget, self).__init__()
     
-    # パッケージ名も書き間違えないように
     pkg_name = 'musashi_coachbox'
     _, package_path = get_resource('packages', pkg_name)
     
-    # UIをロードするけどファイル名を間違えないように
+    # UIをロードする
+    # uiファイル名を間違えないように注意
     ui_file = os.path.join(package_path, 'share', pkg_name, 'resource', 'coachbox_widget.ui')
     loadUi(ui_file, self)
     
-    # オブジェクト名は間違えても動く？未調査
+    # オブジェクト名を設定する
     self.setObjectName('CoachBoxWidget')
     
   # この関数が一定周期で呼び出される

@@ -15,14 +15,17 @@ find_package(ament_cmake_python REQUIRED)
 ament_python_install_package(${PROJECT_NAME}
     PACKAGE_DIR src/${PROJECT_NAME})
 
+# インストールディレクトリのshareの下にplugin.xmlをコピーしている（のかな？）
 install(FILES plugin.xml
   DESTINATION share/${PROJECT_NAME}
 )
 
+# インストールディレクトリのshareの下にresourceディレクトリごとコピーしている（のかな）
 install(DIRECTORY resource
   DESTINATION share/${PROJECT_NAME}
 )
 
+# インストールディレクトリのlibの下にscripts/musashi_coachboxディレクトリごとコピーしている（のかな）
 install(PROGRAMS scripts/musashi_coachbox
   DESTINATION lib/${PROJECT_NAME}
 )

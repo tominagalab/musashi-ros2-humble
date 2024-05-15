@@ -1,4 +1,5 @@
 # coding: UTF-8
+# このpythonモジュールがカスタムPluginの定義になります
 
 from qt_gui.plugin import Plugin
 from python_qt_binding.QtCore import QTimer
@@ -6,11 +7,12 @@ from python_qt_binding.QtCore import QTimer
 from musashi_coachbox.musashi_coachbox_widget import CoachBoxWidget
 
 # クラス名は参照されるので書き間違えないこと
-class CoachBox(Plugin):
+class CoachBoxPlugin(Plugin):
   def __init__(self, context):
-    super(CoachBox, self).__init__(context)
+    super(CoachBoxPlugin, self).__init__(context)
+    
     # オブジェクト名は間違えても動く？未調査
-    self.setObjectName('CoachBox')
+    self.setObjectName('CoachBoxPlugin')
     
     self._context = context
     

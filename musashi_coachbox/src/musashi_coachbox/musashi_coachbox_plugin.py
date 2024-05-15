@@ -2,7 +2,9 @@
 # このpythonモジュールがカスタムPluginの定義になります
 
 from qt_gui.plugin import Plugin
-from python_qt_binding.QtCore import QTimer
+from python_qt_binding.QtCore import QTimer, Slot, Signal
+import rclpy
+import sys
 
 from musashi_coachbox.musashi_coachbox_widget import CoachBoxWidget
 
@@ -31,6 +33,11 @@ class CoachBoxPlugin(Plugin):
     # QTimerのtimeoutシグナルが発行されたらカスタムWidgetのupdateスロット関数を呼び出す
     # GUI画面が必要に応じて更新される
     self._timer.timeout.connect(self._widget.update)
+    
+    # シグナルスロット接続
+    self._widget.btnRefConnect.clicked.connect(self.onClickBtnRefConnect)    
+    
+    
     # 16msec周期で更新させる
     self._timer.start(16)
     
@@ -48,3 +55,7 @@ class CoachBoxPlugin(Plugin):
     # リストア機能は何もしない
     # つらい気持ちを復元してどうするの？
     pass
+  
+  @Slot()
+  def onClickBtnRefConnect(self,):
+    print(sys._getframe().f_code.co_name, ': ')

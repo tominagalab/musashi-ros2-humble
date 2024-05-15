@@ -1,6 +1,6 @@
 <library path="src">
   <!-- クラス名が重要なので書き間違えないように -->
-  <class name="CoachBox" type="musashi_coachbox.musashi_coachbox.CoachBoxPlugin" base_class_type="rqt_gui_py::Plugin">
+  <class name="CoachBox" type="musashi_coachbox.musashi_coachbox_plugin.CoachBoxPlugin" base_class_type="rqt_gui_py::Plugin">
     <description>
       <!-- プラグインの説明です。 -->
       A Python GUI plugin for Hibikino-Musashi CoachBox

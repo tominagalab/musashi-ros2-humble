@@ -7,6 +7,7 @@ import rclpy
 import sys
 
 from musashi_coachbox.musashi_coachbox_widget import CoachBoxWidget
+from musashi_coachbox.refbox_client import RefBoxClient
 
 # クラス名はplugin.xmlから参照するのでスペルミスに注意
 class CoachBoxPlugin(Plugin):
@@ -38,6 +39,9 @@ class CoachBoxPlugin(Plugin):
     self._widget.btnRefConnect.clicked.connect(self.onClickBtnRefConnect)    
     
     
+    # RefBoxClient作成
+    self._refbox_client = RefBoxClient()
+    
     # 16msec周期で更新させる
     self._timer.start(16)
     
@@ -59,3 +63,4 @@ class CoachBoxPlugin(Plugin):
   @Slot()
   def onClickBtnRefConnect(self,):
     print(sys._getframe().f_code.co_name, ': ')
+    self._refbox_client.connect()

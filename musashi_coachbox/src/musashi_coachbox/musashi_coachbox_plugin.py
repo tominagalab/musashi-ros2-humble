@@ -29,20 +29,22 @@ class CoachBoxPlugin(Plugin):
     # contextにカスタムWidgetの追加（多分Pluginだからやっている）
     context.add_widget(self._widget)
     
-    # カスタムWidgetを一定周期で更新するためのQTimer設定
+    # カスタムWidgetを一定周期で更新するためのQTimerを作成
     self._timer = QTimer()
+    
+    
     # QTimerのtimeoutシグナルが発行されたらカスタムWidgetのupdateスロット関数を呼び出す
     # GUI画面が必要に応じて更新される
     self._timer.timeout.connect(self._widget.update)
     
-    # シグナルスロット接続
+    # GUIシグナルスロット接続
     self._widget.btnRefConnect.clicked.connect(self.onClickBtnRefConnect)    
     
     
     # RefBoxClient作成
     self._refbox_client = RefBoxClient()
     
-    # 16msec周期で更新させる
+    # タイマーを16msec周期で起動
     self._timer.start(16)
     
   def shutdown_plugin(self):
@@ -63,7 +65,10 @@ class CoachBoxPlugin(Plugin):
   @Slot()
   def onClickBtnRefConnect(self,):
     print(sys._getframe().f_code.co_name, ': ')
-    isConnect = self._refbox_client.connect()
+    
+    refbox_address = self._widget.lnedtRefAddress.text()
+    refbox_port = int(self._widget.lnedtRefPort.text())
+    isConnect = self._refbox_client.connect(refbox_address, refbox_port)
     
     if not isConnect: 
       print('Retry to connect Referee Box')

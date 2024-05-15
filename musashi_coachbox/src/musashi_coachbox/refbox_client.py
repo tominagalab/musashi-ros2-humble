@@ -2,10 +2,6 @@
 import sys
 import socket
 
-REFBOX_ADDRESS = '172.16.1.2'
-REFBOX_PORT = 12345
-REFBOX = (REFBOX_ADDRESS, REFBOX_PORT)
-
 MAX_RECV_SIZE = 1024 # byte
 
 class RefBoxClient:
@@ -14,17 +10,17 @@ class RefBoxClient:
     # socket.SOCK_DGRAMオプションでUDP通信の設定
     self._socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     
-  def connect(self,):
-    print('[{}] Conenct to {}:{}'.format(sys._getframe().f_code.co_name, REFBOX_ADDRESS, REFBOX_PORT))
-    send_len = self._socket.sendto('hello'.encode('utf-8'), REFBOX)
-    print('send bytes: ', send_len)
+  def connect(self, address, port):
+    print('[{}] Conenct to {}:{}'.format(sys._getframe().f_code.co_name, address, port))
+    send_len = self._socket.sendto('hello'.encode('utf-8'), (address, port))
+    # print('send bytes: ', send_len)
     
     # blockingモードでタイムアウトを設定する
-    self._socket.settimeout(1)
+    self._socket.settimeout(2)
     try:
       recv, address = self._socket.recvfrom(MAX_RECV_SIZE) # ブロッキングモードで受信待ち
     except socket.timeout as e: # タイムアウトエラー
-      print(e)
+      print('Error: ', e)
       return False
     
     if address == REFBOX_ADDRESS:
@@ -37,7 +33,6 @@ class RefBoxClient:
       # }
     else:
       return False
-    
     
   def disconnect(self,):
     print('[{}] Disconnect'.format(sys._getframe().f_code.co_name))

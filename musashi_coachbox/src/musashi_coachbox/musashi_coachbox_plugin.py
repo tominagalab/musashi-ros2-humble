@@ -63,4 +63,8 @@ class CoachBoxPlugin(Plugin):
   @Slot()
   def onClickBtnRefConnect(self,):
     print(sys._getframe().f_code.co_name, ': ')
-    self._refbox_client.connect()
+    isConnect = self._refbox_client.connect()
+    
+    if not isConnect: 
+      print('Retry to connect Referee Box')
+      return

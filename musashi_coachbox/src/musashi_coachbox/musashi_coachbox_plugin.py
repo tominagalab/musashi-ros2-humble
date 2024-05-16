@@ -32,18 +32,14 @@ class CoachBoxPlugin(Plugin):
     # カスタムWidgetを一定周期で更新するためのQTimerを作成
     self._timer = QTimer()
     
-    
     # QTimerのtimeoutシグナルが発行されたらカスタムWidgetのupdateスロット関数を呼び出す
     # GUI画面が必要に応じて更新される
     self._timer.timeout.connect(self._widget.update)
     
     # GUIシグナルスロット接続
     self._widget.btnRefConnect.clicked.connect(self.onClickBtnRefConnect)    
-    
-    
-    # RefBoxClient作成
-    self._refbox_client = RefBoxClient()
-    
+    self._widget.btnRefDisconnect.clicked.connect(self.onClickBtnRefDisconnect)    
+        
     # タイマーを16msec周期で起動
     self._timer.start(16)
     
@@ -53,23 +49,31 @@ class CoachBoxPlugin(Plugin):
     pass
   
   def save_settings(self, plugin_settings, instance_settings):
-    # セーブ機能は何もしない
-    # つらい気持ちをファイルに保存する機能　いる？
     pass
   
   def restore_settings(self, plugin_settings, instance_settings):
-    # リストア機能は何もしない
-    # つらい気持ちを復元してどうするの？
     pass
   
   @Slot()
   def onClickBtnRefConnect(self,):
-    print(sys._getframe().f_code.co_name, ': ')
+
+    # RefBoxClientの新規作成
+    self._refbox_client = RefBoxClient()
     
     refbox_address = self._widget.lnedtRefAddress.text()
     refbox_port = int(self._widget.lnedtRefPort.text())
     isConnect = self._refbox_client.connect(refbox_address, refbox_port)
     
+    self._refbox_client.start()
+    
     if not isConnect: 
-      print('Retry to connect Referee Box')
-      return
+      print('Connection error, please chech network condition')
+    else:
+      pass
+  
+  @Slot()
+  def onClickBtnRefDisconnect(self,):
+    self._refbox_client.disconnect()
+    self._refbox_client.join()
+    del self._refbox_client # デストラクタの呼び出し
+    # pythonでは一応自動的にメモリ解放されるっぽい

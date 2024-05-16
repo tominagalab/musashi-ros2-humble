@@ -3,8 +3,9 @@ import sys
 import socket
 import threading
 import time
+import json
 
-MAX_RECV_SIZE = 1024 # byte
+MAX_RECV_SIZE = 1024*4 # byte
 
 class RefBoxClient(threading.Thread):
   # コンストラクタ
@@ -43,7 +44,16 @@ class RefBoxClient(threading.Thread):
     self._socket.close()
     self.join()
     
+  # 主となる処理（スレッド処理実態）
   def run(self,):
-    while self._isRun:    
-      print('run')
-      time.sleep(1)
+    while self._isRun:
+      # RefereeBoxからのコマンド受信処理
+      recv = self._socket.recv(MAX_RECV_SIZE) 
+      
+      # コマンドは全てjson形式のテキストデータで送られてきます
+      # データ末尾にはNULL（'\0'）が入れられているみたいです
+      
+      recv_json = json.load(recv.decode('utf-8'))
+      print(recv_json)
+      
+      time.sleep(0.1) # sleepしないとCPUリソースを大量に要求するので，適当な周期で回しています．

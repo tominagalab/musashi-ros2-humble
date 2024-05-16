@@ -64,12 +64,12 @@ class CoachBoxPlugin(Plugin):
     refbox_port = int(self._widget.lnedtRefPort.text())
     isConnect = self._refbox_client.connect(refbox_address, refbox_port)
     
-    self._refbox_client.start()
-    
     if not isConnect: 
       print('Connection error, please chech network condition')
     else:
-      pass
+      self._refbox_client.start()
+      self._widget.btnRefDisconnect.setEnable(True)
+      self._widget.btnRefConnect.setEnable(False)
   
   @Slot()
   def onClickBtnRefDisconnect(self,):
@@ -77,3 +77,5 @@ class CoachBoxPlugin(Plugin):
     self._refbox_client.join()
     del self._refbox_client # デストラクタの呼び出し
     # pythonでは一応自動的にメモリ解放されるっぽい
+    self._widget.btnRefDisconnect.setEnable(False)
+    self._widget.btnRefConnect.setEnable(True)

@@ -20,6 +20,15 @@ class PlayerServerPlugin(Plugin):
         self._widget.windowTitle() + (' (%d)' % context.serial_number()))
       context.add_widget(self._widget)
       
+      
+    # サブスクライバー作成
+    self._sub_refcmd = self._node.create_subscription(
+      RefereeCmd,
+      '/referee_cmd',
+      self.refcmd_callback,
+      10
+    )
+      
     self._timer = QTimer()
     self._timer.timeout.connect(self._widget.update)
     self._timer.start(16)
@@ -33,5 +42,8 @@ class PlayerServerPlugin(Plugin):
   
   def restore_settings(self, plugin_settings, instance_settings):
     pass
+  
+  def refcmd_callback(self, msg):
+    print(msg.command, msg.target_team)
   
   

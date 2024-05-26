@@ -18,20 +18,20 @@ class RefereeBoxClientPlugin(Plugin):
     if context.serial_number() > 1:
       self._widget.setWindowTitle(
         self._widget.windowTitle() + (' (%d)' % context.serial_number()))
-      context.add_widget(self._widget)
-      
+      context.add_widget(self._widget)  
+
+    # GUIã‚·ã‚°ãƒŠãƒ«ã‚¹ãƒ­ãƒƒãƒˆæ¥ç¶š
+    self._widget.chckConnect.stateChanged.connect(self.onStateChangedChckConnect)
+    
+    # ãƒ‘ãƒ–ãƒªãƒƒã‚·ãƒ£ãƒ¼ä½œæˆ
+    self._pub_refcmd = self._node.create_publisher(RefereeCmd, '/referee_cmd', 5)
+    
     self._timer = QTimer()
     self._timer.timeout.connect(self._widget.update)
     self._timer.start(16)
-    
-    # GUIƒVƒOƒiƒ‹ƒXƒƒbƒgÚ‘±
-    self._widget.chckConnect.stateChanged.connect(self.onStateChangedChckConnect)
-    
-    # ƒpƒuƒŠƒbƒVƒƒ[ì¬
-    self._pub_refcmd = self._node.create_publisher(RefereeCmd, '/referee_cmd', 5)
   
   def shutdown_plugin(self):
-    # I—¹‚Íƒ^ƒCƒ}[‚ğ~‚ß‚é
+    # çµ‚äº†æ™‚ã¯ã‚¿ã‚¤ãƒãƒ¼ã‚’æ­¢ã‚ã‚‹
     self._timer.stop()
   
   def save_settings(self, plugin_settings, instance_settings):
@@ -41,37 +41,37 @@ class RefereeBoxClientPlugin(Plugin):
     pass
   
   def onStateChangedChckConnect(self, state):
-    if state: # ƒ`ƒFƒbƒN‚ª“ü‚Á‚½¨Ú‘±ˆ—
-      # RefBoxClient‚ÌV‹Kì¬
+    if state: # ãƒã‚§ãƒƒã‚¯ãŒå…¥ã£ãŸâ†’æ¥ç¶šå‡¦ç†
+      # RefBoxClientã®æ–°è¦ä½œæˆ
       self._refbox_client = RefBoxClient()
-      # IPƒAƒhƒŒƒX‚Æƒ|[ƒg‚ğæ“¾
+      # IPã‚¢ãƒ‰ãƒ¬ã‚¹ã¨ãƒãƒ¼ãƒˆã‚’å–å¾—
       refbox_address = self._widget.lnedtIP.text()
       refbox_port = int(self._widget.lnedtPort.text())
-      # Ú‘±‚Ìƒgƒ‰ƒC
+      # æ¥ç¶šã®ãƒˆãƒ©ã‚¤
       isConnect = self._refbox_client.connect(refbox_address, refbox_port)
       
-      if not isConnect: # ¸”s
+      if not isConnect: # å¤±æ•—
         print('Connection error, please chech network condition')
         self._widget.chckConnect.setCheckState(False)
         self._refbox_client = None
-      else: # ¬Œ÷
-        self._refbox_client.recievedCommand.connect(self.onRecievedCommand) # óM‚ÌƒVƒOƒiƒ‹ƒXƒƒbƒgÚ‘±
-        self._refbox_client.start() # RefereeBox client ƒXƒŒƒbƒh‚ÌƒXƒ^[ƒg
-    else: # ƒ`ƒFƒbƒN‚ªŠO‚ê‚½¨Ø’fˆ—
+      else: # æˆåŠŸ
+        self._refbox_client.recievedCommand.connect(self.onRecievedCommand) # å—ä¿¡æ™‚ã®ã‚·ã‚°ãƒŠãƒ«ã‚¹ãƒ­ãƒƒãƒˆæ¥ç¶š
+        self._refbox_client.start() # RefereeBox client ã‚¹ãƒ¬ãƒƒãƒ‰ã®ã‚¹ã‚¿ãƒ¼ãƒˆ
+    else: # ãƒã‚§ãƒƒã‚¯ãŒå¤–ã‚ŒãŸâ†’åˆ‡æ–­å‡¦ç†
       # self._refbox_client.disconnect()
       # self._refbox_client.join()
-      self._refbox_client = None # ƒfƒXƒgƒ‰ƒNƒ^‚ÌŒÄ‚Ño‚µ
-      # python‚Å‚Íˆê‰©“®“I‚Éƒƒ‚ƒŠ‰ğ•ú‚³‚ê‚é‚Á‚Û‚¢
+      self._refbox_client = None # ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã®å‘¼ã³å‡ºã—
+      # pythonã§ã¯ä¸€å¿œè‡ªå‹•çš„ã«ãƒ¡ãƒ¢ãƒªè§£æ”¾ã•ã‚Œã‚‹ã£ã½ã„
       
   def onRecievedCommand(self, command, targetTeam):
     print(command, targetTeam)
     
-    # ƒƒbƒZ[ƒWì¬
+    # ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ä½œæˆ
     refereeCmd = RefereeCmd()
-    # ’l‚Ì‘ã“ü
+    # å€¤ã®ä»£å…¥
     refereeCmd.command = command
-    refereeCmd.targat_team = targetTeam
+    refereeCmd.target_team = targetTeam
     
-    # ƒpƒuƒŠƒbƒVƒ…
+    # ãƒ‘ãƒ–ãƒªãƒƒã‚·ãƒ¥
     self._pub_refcmd.publish(refereeCmd)
     

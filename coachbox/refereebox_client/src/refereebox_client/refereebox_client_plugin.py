@@ -4,6 +4,8 @@ from python_qt_binding.QtCore import QTimer, Slot
 from refereebox_client.refereebox_client_widget import RefereeBoxClientWidget
 from refereebox_client.refbox_client import RefBoxClient
 
+from musashi_msgs.msg import RefereeCmd
+
 class RefereeBoxClientPlugin(Plugin):
   def __init__(self, context):
     super(RefereeBoxClientPlugin, self).__init__(context)
@@ -22,7 +24,7 @@ class RefereeBoxClientPlugin(Plugin):
     self._timer.start(16)
     
     # GUIシグナルスロット接続
-    self._widget.chckConnect.stateChanged.connect(lambda: self.onStateChangedChckConnect(self._widget.chckConnect.checkState()))
+    self._widget.chckConnect.stateChanged.connect(self.onStateChangedChckConnect)
   
   def shutdown_plugin(self):
     # 終了時はタイマーを止める
@@ -34,7 +36,6 @@ class RefereeBoxClientPlugin(Plugin):
   def restore_settings(self, plugin_settings, instance_settings):
     pass
   
-  @Slot()
   def onStateChangedChckConnect(self, state):
     if state: # チェックが入った→接続処理
       # RefBoxClientの新規作成
@@ -48,10 +49,16 @@ class RefereeBoxClientPlugin(Plugin):
       if not isConnect: # 失敗
         print('Connection error, please chech network condition')
         self._widget.chckConnect.setCheckState(False)
+        self._refbox_client = None
       else: # 成功
-        self._refbox_client.start()
+        self._refbox_client.recievedCommand.connect(self.onRecievedCommand) # 受信時のシグナルスロット接続
+        self._refbox_client.start() # RefereeBox client スレッドのスタート
     else: # チェックが外れた→切断処理
       # self._refbox_client.disconnect()
       # self._refbox_client.join()
-      del self._refbox_client # デストラクタの呼び出し
+      self._refbox_client = None # デストラクタの呼び出し
       # pythonでは一応自動的にメモリ解放されるっぽい
+      
+  def onRecievedCommand(self, command, targetTeam):
+    print(command, targetTeam)
+    

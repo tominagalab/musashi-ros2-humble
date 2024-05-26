@@ -1,3 +1,4 @@
+from python_qt_binding.QtCore import QThread, Signal
 
 import sys
 import socket
@@ -9,7 +10,11 @@ import json
 TEAM_IP = '172.16.32.44' # チームに割り振られた固有IP（コーチボックスに設定するアドレスではありません）
 MAX_RECV_SIZE = 1024*4 # byte
 
-class RefBoxClient(threading.Thread):
+class RefBoxClient(QThread):
+  
+  # シグナル定義
+  recievedCommand = Signal(str,str)
+  
   # コンストラクタ
   def __init__(self,):
     super(RefBoxClient, self).__init__()
@@ -67,4 +72,4 @@ class RefBoxClient(threading.Thread):
       command = recv_json['command']
       targetTeam = recv_json['targetTeam']
       
-      # commandの内容（文字列）に従って各プレイヤーへコマンドを送信する
+      self.recievedCommand.emit(command, targetTeam)

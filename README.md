@@ -8,12 +8,12 @@ Robocup Hibikino-Musashi のROS2用パッケージ
 ## ディレクトリ構成  
 - musashi-ros2-humble  
   - README.md（このファイル）
-  - hardware（センサ，アクチュエータなど外部デバイス用パッケージディレクトリ）  
-  - perception（画像処理や物体認識など知覚系パッケージディレクトリ）  
-  - localization（自己位置推定用パッケージディレクトリ） 
-  - behavior（行動決定，意思決定用パッケージディレクトリ）   
+  - hardware（センサ，アクチュエータなど外部デバイス用メタディレクトリ）  
+  - perception（画像処理や物体認識など知覚系メタディレクトリ）  
+  - localization（自己位置推定用メタディレクトリ） 
+  - behavior（行動決定，意思決定用メタディレクトリ） 
+  - coachbox（CoachBox用メタディレクトリ）  
   - musashi_msgs（ROSメッセージ開発用パッケージディレクトリ）
-  - musashi_coachbox（コーチボックス開発用パッケージディレクトリ）
 
 ## パッケージ作成コマンド例  
 ### pythonパッケージ　　

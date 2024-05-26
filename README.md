@@ -17,6 +17,6 @@ Robocup Hibikino-Musashi のROS2用パッケージ
 
 ## パッケージ作成コマンド例  
 ### pythonパッケージ　　
-``ros2 pkg create ament_python ``  
+``ros2 pkg create [package name] --build-type ament_python --dependencies rclpy``  
 ### C++パッケージ　　
 ``ros2 pkg create [package name] --build-type ament_cmake --dependencies rclcpp``  

@@ -45,18 +45,22 @@ class RefereeBoxClientPlugin(Plugin):
       # RefBoxClientの新規作成
       self._refbox_client = RefBoxClient()
       # IPアドレスとポートを取得
-      refbox_address = self._widget.lnedtIP.text()
-      refbox_port = int(self._widget.lnedtPort.text())
-      # 接続のトライ
-      isConnect = self._refbox_client.connect(refbox_address, refbox_port)
+      refboxIP = self._widget.lnedtIP.text()
+      refboxPort = int(self._widget.lnedtPort.text())
       
-      if not isConnect: # 失敗
-        print('Connection error, please chech network condition')
-        self._widget.chckConnect.setCheckState(False)
-        self._refbox_client = None
-      else: # 成功
+      # 接続のトライ
+      self._node.get_logger().info('Try to connect to RefereeBox [{}:{}] ...'.format(refboxIP, refboxPort))
+      isConnect = self._refbox_client.connect(refboxIP, refboxPort)
+      
+      if isConnect:
+        self._node.get_logger().info('Successfully connected to RefereeBox')
         self._refbox_client.recievedCommand.connect(self.onRecievedCommand) # 受信時のシグナルスロット接続
         self._refbox_client.start() # RefereeBox client スレッドのスタート
+      else:
+        self._node.get_logger().error('Failed to connect to RefereeBox')
+        self._node.get_logger().error('Please check network connection status')
+        self._widget.chckConnect.setCheckState(False)
+        self._refbox_client = None
     else: # チェックが外れた→切断処理
       # self._refbox_client.disconnect()
       # self._refbox_client.join()
@@ -64,7 +68,8 @@ class RefereeBoxClientPlugin(Plugin):
       # pythonでは一応自動的にメモリ解放されるっぽい
       
   def onRecievedCommand(self, command, targetTeam):
-    print(command, targetTeam)
+    self._node.get_logger().info('Recieved from RefereeBox')
+    self._node.get_logger().info('command = {}, targetTeam = {}'.format(command, targetTeam))
     
     # メッセージ作成
     refereeCmd = RefereeCmd()

@@ -33,7 +33,6 @@ class RefBoxClient(QThread):
   def connect(self, address, port):
     # 接続処理
     try:
-      print('Try to connect to RefereeBox')
       self._socket.settimeout(3) # timeout [sec]
       self._socket.connect((address, port))
     except Exception as e:
@@ -41,12 +40,10 @@ class RefBoxClient(QThread):
       return False
     
     # 無事にサーバ（RefereeBox）へ接続ができれば，RefereeBox側で反応がある
-        
     return True # 接続完了を表す
     
   # 切断処理メソッド
   def disconnect(self,):
-    print('Disconnect from RefereeBox')
     self._isRun = False
     self._socket.close()
     self.join()
@@ -64,12 +61,11 @@ class RefBoxClient(QThread):
       # データ末尾にはNULL（'\0'）が入れられているみたいです
       # 文字列（str）型の末尾１文字を削除している
       recv_json = json.loads(recv.decode('utf-8')[:-1])
-      print('Recieve from RefereeBox: ')
-      print(recv_json)
+      
       # recv_jsonは辞書型
-      # キーは'command'と'targetTeam'の二つ
-      # 各値を取得する
+      # キーは'command'と'targetTeam'の二つ，各値を取得する
       command = recv_json['command']
       targetTeam = recv_json['targetTeam']
       
+      # シグナルの発行      
       self.recievedCommand.emit(command, targetTeam)

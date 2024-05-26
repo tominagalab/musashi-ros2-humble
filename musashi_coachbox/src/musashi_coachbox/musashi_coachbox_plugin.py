@@ -37,8 +37,9 @@ class CoachBoxPlugin(Plugin):
     self._timer.timeout.connect(self._widget.update)
     
     # GUIシグナルスロット接続
-    self._widget.btnRefConnect.clicked.connect(self.onClickBtnRefConnect)    
-    self._widget.btnRefDisconnect.clicked.connect(self.onClickBtnRefDisconnect)    
+    self._widget.chckRefConnect.stateChanged.connect(lambda: self.onStateChangedChckRefConnect(self._widget.chckRefConnect.checkState()))
+    # self._widget.btnRefConnect.clicked.connect(self.onClickBtnRefConnect)    
+    # self._widget.btnRefDisconnect.clicked.connect(self.onClickBtnRefDisconnect)    
         
     # タイマーを16msec周期で起動
     self._timer.start(16)
@@ -55,27 +56,48 @@ class CoachBoxPlugin(Plugin):
     pass
   
   @Slot()
-  def onClickBtnRefConnect(self,):
-
-    # RefBoxClientの新規作成
-    self._refbox_client = RefBoxClient()
-    
-    refbox_address = self._widget.lnedtRefAddress.text()
-    refbox_port = int(self._widget.lnedtRefPort.text())
-    isConnect = self._refbox_client.connect(refbox_address, refbox_port)
-    
-    if not isConnect: 
-      print('Connection error, please chech network condition')
-    else:
-      self._refbox_client.start()
-      self._widget.btnRefDisconnect.setEnable(True)
-      self._widget.btnRefConnect.setEnable(False)
+  def onStateChangedChckRefConnect(self, state):
+    if state: # チェックが入った→接続処理
+      # RefBoxClientの新規作成
+      self._refbox_client = RefBoxClient()
+      # IPアドレスとポートを取得
+      refbox_address = self._widget.lnedtRefAddress.text()
+      refbox_port = int(self._widget.lnedtRefPort.text())
+      # 接続のトライ
+      isConnect = self._refbox_client.connect(refbox_address, refbox_port)
+      
+      if not isConnect: # 失敗
+        print('Connection error, please chech network condition')
+      else: # 成功
+        self._refbox_client.start()
+    else: # チェックが外れた→切断処理
+      self._refbox_client.disconnect()
+      self._refbox_client.join()
+      del self._refbox_client # デストラクタの呼び出し
+      # pythonでは一応自動的にメモリ解放されるっぽい
   
-  @Slot()
-  def onClickBtnRefDisconnect(self,):
-    self._refbox_client.disconnect()
-    self._refbox_client.join()
-    del self._refbox_client # デストラクタの呼び出し
-    # pythonでは一応自動的にメモリ解放されるっぽい
-    self._widget.btnRefDisconnect.setEnable(False)
-    self._widget.btnRefConnect.setEnable(True)
+  # @Slot()
+  # def onClickBtnRefConnect(self,):
+
+  #   # RefBoxClientの新規作成
+  #   self._refbox_client = RefBoxClient()
+    
+  #   refbox_address = self._widget.lnedtRefAddress.text()
+  #   refbox_port = int(self._widget.lnedtRefPort.text())
+  #   isConnect = self._refbox_client.connect(refbox_address, refbox_port)
+    
+  #   if not isConnect: 
+  #     print('Connection error, please chech network condition')
+  #   else:
+  #     self._refbox_client.start()
+  #     self._widget.btnRefDisconnect.setEnabled(True)
+  #     self._widget.btnRefConnect.setEnabled(False)
+  
+  # @Slot()
+  # def onClickBtnRefDisconnect(self,):
+  #   self._refbox_client.disconnect()
+  #   self._refbox_client.join()
+  #   del self._refbox_client # デストラクタの呼び出し
+  #   # pythonでは一応自動的にメモリ解放されるっぽい
+  #   self._widget.btnRefDisconnect.setEnabled(False)
+  #   self._widget.btnRefConnect.setEnabled(True)

@@ -26,9 +26,10 @@ install(DIRECTORY resource
 )
 
 # インストールディレクトリのlibの下にscripts/musashi_coachboxディレクトリごとコピーしている（のかな）
-install(PROGRAMS scripts/musashi_coachbox
+install(PROGRAMS scripts/musashi_coachbox scripts/refereebox_client
   DESTINATION lib/${PROJECT_NAME}
 )
+
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

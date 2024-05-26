@@ -5,6 +5,8 @@ import threading
 import time
 import json
 
+
+TEAM_IP = '172.16.32.44' # チームに割り振られた固有IP（コーチボックスに設定するアドレスではありません）
 MAX_RECV_SIZE = 1024*4 # byte
 
 class RefBoxClient(threading.Thread):
@@ -46,14 +48,27 @@ class RefBoxClient(threading.Thread):
     
   # 主となる処理（スレッド処理実態）
   def run(self,):
+    # ブロッキングモード設定
+    self._socket.settimeout(None)
+
     while self._isRun:
-      # RefereeBoxからのコマンド受信処理
+      # RefereeBoxからのコマンド受信待ち
       recv = self._socket.recv(MAX_RECV_SIZE) 
       
       # コマンドは全てjson形式のテキストデータで送られてきます
       # データ末尾にはNULL（'\0'）が入れられているみたいです
-      
-      recv_json = json.load(recv.decode('utf-8'))
+      # 文字列（str）型の末尾１文字を削除している
+      recv_json = json.loads(recv.decode('utf-8')[:-1])
+      print('Recieve from RefereeBox: ')
       print(recv_json)
+      # recv_jsonは辞書型
+      # キーは'command'と'targetTeam'の二つ
+      # 各値を取得する
+      command = recv_json['command']
+      targetTeam = recv_json['targetTeam']
       
-      time.sleep(0.1) # sleepしないとCPUリソースを大量に要求するので，適当な周期で回しています．
+      # commandの内容（文字列）に従って各プレイヤーへコマンドを送信する
+      if command == COMM_WELCOME:
+        print('Successeed connect to RefereeBox!')
+      else:
+        pass

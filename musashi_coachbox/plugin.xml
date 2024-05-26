@@ -16,7 +16,7 @@
         <statustip>Plugins related to visualization.</statustip>
       </group>
       <!-- プラグインのラベルです． -->
-      <label>CoachBox</label>
+      <label>CB</label>
       <!-- プラグインのアイコンです。何でもいいと思います。 -->
       <!-- Image Viewと同じにしました。 -->
       <icon type="theme">image-x-generic</icon>

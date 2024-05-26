@@ -68,7 +68,3 @@ class RefBoxClient(threading.Thread):
       targetTeam = recv_json['targetTeam']
       
       # commandの内容（文字列）に従って各プレイヤーへコマンドを送信する
-      if command == COMM_WELCOME:
-        print('Successeed connect to RefereeBox!')
-      else:
-        pass

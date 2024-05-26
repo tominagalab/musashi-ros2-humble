@@ -12,6 +12,7 @@ class RefereeBoxClientPlugin(Plugin):
     
     self.setObjectName('RefereeBoxClientPlugin')
     self._context = context
+    self._node = context.node
     
     self._widget = RefereeBoxClientWidget()
     if context.serial_number() > 1:
@@ -25,6 +26,9 @@ class RefereeBoxClientPlugin(Plugin):
     
     # GUIシグナルスロット接続
     self._widget.chckConnect.stateChanged.connect(self.onStateChangedChckConnect)
+    
+    # パブリッシャー作成
+    self._pub_refcmd = self._node.create_publisher(RefereeCmd, '/referee_cmd', 5)
   
   def shutdown_plugin(self):
     # 終了時はタイマーを止める
@@ -61,4 +65,13 @@ class RefereeBoxClientPlugin(Plugin):
       
   def onRecievedCommand(self, command, targetTeam):
     print(command, targetTeam)
+    
+    # メッセージ作成
+    refereeCmd = RefereeCmd()
+    # 値の代入
+    refereeCmd.command = command
+    refereeCmd.targat_team = targetTeam
+    
+    # パブリッシュ
+    self._pub_refcmd.publish(refereeCmd)
     

@@ -26,7 +26,9 @@ musashi-ros2-humble（ルートディレクトリ）
 </pre>
 
 ## パッケージ作成コマンド例  
-### pythonパッケージ　　 
+- pythonパッケージ  
 ``ros2 pkg create [package name] --build-type ament_python --dependencies rclpy``  
-### C++パッケージ　　
+- C++パッケージ  
 ``ros2 pkg create [package name] --build-type ament_cmake --dependencies rclcpp``  
+- pythonのrqtプラグインパッケージ  
+`ros2 pkg create [package name] --build-type ament_python --dependencies rclpy python_qt_binding rqt_gui rqt_gui_py rqt_py_common`

@@ -1,11 +1,14 @@
 # coachbox
 コーチボックス関係のパッケージを配置しているディレクトリです．
-## Packages  
-### refereebox_client  
-### player_server   
-## RefereeBox-CoachBox間通信
+## パッケージリスト  
+- refereebox_client  
+レフェリーボックスと通信を行うパッケージです．  
+- player_server   
+各プレイヤーと通信を行うパッケージです．  
+
+## RefereeBox-CoachBox間通信について
 RefereeBoxとはTCPで送受信を行います．  
-### コマンドフォーマット  
+### コマンドフォーマット詳細  
 - RefereeBoxからはJSON形式の文字列データがバイナリデータで送られてきます．
 - JSONフォーマットは以下の形式を持ちます  
 ```
@@ -22,7 +25,7 @@ RefereeBoxとはTCPで送受信を行います．
   - ターゲットチーム文字列（"224.16.32.*"）が入っている場合は，そのチームにするコマンドになります．  
   （例）commandが"KICKOFF"で，targetTeamが"224.16.32.44"の場合は，チームHibikino-Musashiがキックオフであることを意味するので，自チームのキックオフポジションに移動し，"START"コマンドを待機する必要がある． 
 
-### コマンドリスト  
+### コマンド一覧  
 |command|targetTeam|  
 |-------|----------|  
 |"START"|""|  
@@ -51,6 +54,7 @@ RefereeBoxとはTCPで送受信を行います．
 |RED_CARD|"224.16.32.*"|
 |SUBSTITUTION|"224.16.32.*"|
 |IS_ALIVE|"224.16.32.*"|
+
 ## Hibkino-MusashiにおけるCoachBox-Player間通信  
 CoachBoxとPlayerはUDPで通信を行っています．  
 - 具体的な通信処理については"musashi_player/communication/communication.cpp"を参照してください．  

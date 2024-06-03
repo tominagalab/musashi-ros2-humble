@@ -14,8 +14,9 @@ class PlayerServerPlugin(Plugin):
     self._context = context
     self._node = context.node
     
+    # ウィジェット実態の作成
     self._widget = PlayerServerWidget()
-    
+    # 複数出してしまった時に個別のインスタンスが作成されるように一工夫
     if context.serial_number() > 1:
       self._widget.setWindowTitle(
         self._widget.windowTitle() + (' (%d)' % context.serial_number()))
@@ -37,8 +38,8 @@ class PlayerServerPlugin(Plugin):
     self._timer.timeout.connect(self._widget.update)
     self._timer.start(16)
     
-    self._player_server.open()
-    self._player_server.start()
+    self._player_server.open()  # プレイヤーサーバのオープン
+    self._player_server.start() # UDP通信の受信スレッド開始
     
   def shutdown_plugin(self):
     # 終了時はタイマーを止める
@@ -51,6 +52,7 @@ class PlayerServerPlugin(Plugin):
   def restore_settings(self, plugin_settings, instance_settings):
     pass
   
+  # refereebox_clientがパブリッシュした，レフェリーボックスコマンドのサブスクライバー
   def refcmd_callback(self, msg):
     print(msg.command, msg.target_team)
   

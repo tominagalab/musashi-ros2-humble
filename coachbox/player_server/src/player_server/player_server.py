@@ -100,4 +100,4 @@ class PlayerServer(QThread):
       self._players[player_no] = data
       
       # シグナル発行
-      recievedPlayerData.emit(player_no, data)
+      self.recievedPlayerData.emit(player_no, data)

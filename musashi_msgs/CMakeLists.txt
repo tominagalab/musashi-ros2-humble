@@ -15,6 +15,8 @@ set(msg_files
   "msg/MotorState.msg"
   "msg/MotorStates.msg"
   "msg/RefereeCmd.msg"
+  "msg/PlayerState.msg"
+  "msg/PlayerStates.msg"
 )
 
 rosidl_generate_interfaces(${PROJECT_NAME}

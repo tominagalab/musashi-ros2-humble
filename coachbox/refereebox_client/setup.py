@@ -13,6 +13,7 @@ setup(
         ('share/' + package_name + '/resource', ['resource/refereebox_client_widget.ui']),
         ('share/' + package_name, ['package.xml']),
         ('share/' + package_name, ['plugin.xml']),
+        ('lib/' + package_name, ['scripts/refereebox_client'])
     ],
     install_requires=['setuptools'],
     zip_safe=True,

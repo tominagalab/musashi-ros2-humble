@@ -18,7 +18,8 @@ class PlayerControllerPlugin(Plugin):
     if context.serial_number() > 1:
       self._widget.setWindowTitle(
         self._widget.windowTitle() + (' (%d)' % context.serial_number()))
-      context.add_widget(self._widget)
+    
+    context.add_widget(self._widget)
           
     self._timer = QTimer()
     self._timer.timeout.connect(self._widget.update)

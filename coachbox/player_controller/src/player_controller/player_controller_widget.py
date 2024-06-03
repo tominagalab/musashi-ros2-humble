@@ -3,8 +3,10 @@ import os
 from ament_index_python.resources import get_resource
 
 from python_qt_binding import loadUi
-from python_qt_binding.QtWidgets import QWidget, QVBoxLayout
+from python_qt_binding.QtWidgets import QWidget, QHBoxLayout
 from python_qt_binding.QtCore import Qt
+
+PLAYER_NUM = 5
 
 class PlayerControllerWidget(QWidget):
   def __init__(self):
@@ -17,10 +19,15 @@ class PlayerControllerWidget(QWidget):
     ui_file = os.path.join(
         package_path, 'share', pkg_name, 'resource', 'player_controller.ui')
     
-    self._layout = QVBoxLayout()
-    self.p1widget = QWidget()
-    loadUi(ui_file, self.p1widget)
-    self._layout.addWidget(self.p1widget)
+    self._layout = QHBoxLayout()
+    
+    self._pwidgets = []
+    
+    for i in range(PLAYER_NUM):
+      self._pwidgets.append(QWidget())
+      loadUi(ui_file, self._pwidgets[-1]) # 末尾のQWidgetインスタンスにuiファイルをロード
+      self._layout.addWidget(self._pwidgets[-1])
+      
     self.setLayout(self._layout)
     
     # オブジェクト名は間違えても動く？未調査

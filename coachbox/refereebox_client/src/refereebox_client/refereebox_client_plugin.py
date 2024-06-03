@@ -18,7 +18,8 @@ class RefereeBoxClientPlugin(Plugin):
     if context.serial_number() > 1:
       self._widget.setWindowTitle(
         self._widget.windowTitle() + (' (%d)' % context.serial_number()))
-      context.add_widget(self._widget)  
+    
+    context.add_widget(self._widget)  
 
     # GUIシグナルスロット接続
     self._widget.chckConnect.stateChanged.connect(self.onStateChangedChckConnect)

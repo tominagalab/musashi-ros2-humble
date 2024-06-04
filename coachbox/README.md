@@ -1,10 +1,18 @@
 # coachbox
 コーチボックス関係のパッケージを配置しているディレクトリです．
+<pre>
+coachbox
+├── README.md
+├── player_controller
+├── player_server
+└── refereebox_client
+</pre>
 ## パッケージリスト  
-- refereebox_client  
-レフェリーボックスと通信を行うパッケージです．  
-- player_server   
-各プレイヤーと通信を行うパッケージです．  
+|Package name|Details|
+|---|---|
+|player_controller|各プレイヤーへのデータ送信を行うパッケージ|
+|player_server|各プレイヤーからのデータ受信を行うパッケージ|  
+|refereebox_client| レフェリーボックスと通信を行うパッケージ|  
 
 ## RefereeBox-CoachBox間通信について
 RefereeBoxとはTCPで送受信を行います．  

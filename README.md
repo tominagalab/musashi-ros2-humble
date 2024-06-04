@@ -9,21 +9,33 @@ Visual Studioを用いたC++のみの開発に限界を感じてきたため，
 - Visual Studio Code（エディタ）  
 - python，C++  
 
-## 開発規約  
-PEP8コードスタイルに準拠する．  
+## コーディング規約（命名規則）  
+pythonでのコーディングにおいてはPEP8コードスタイルに準拠する．
+以下を参照すること．  
 `https://peps.python.org/pep-0008/#code-lay-out`  
+`https://atmarkit.itmedia.co.jp/ait/articles/2308/08/news020.html`  
 
-## ディレクトリ構成   
+## ディレクトリ構成     
 <pre>
 musashi-ros2-humble（ルートディレクトリ）  
-|-- README.md（このファイル）  
-|-- behavior（ルールベース行動選択，意思決定パッケージ用ディレクトリ）  
-|-- coachbox（コーチボックス関連パッケージ用ディレクトリ）  
-|-- hardware（外部デバイス関連パッケージ用ディレクトリ）    
-|-- localization（自己位置推定関連パッケージ用ディレクトリ）  
-|-- musashi_msgs（独自メッセージ用ディレクトリ）  
-`-- perception（外界認識等，知覚系パッケージ用ディレクトリ）  
+├── README.md
+├── behavior
+├── coachbox
+├── hardware
+├── localization
+├── musashi_msgs
+└── perception 
 </pre>
+
+|Name|Detail|  
+|---|---|
+|README.md|このファイル|
+|behavior|ルールベース行動決定，ステートマシン，行動選択のディレクトリ|
+|coachbox|レフェリーボックス，プレイヤーとの通信関係ディレクトリ|
+|hardware|外部デバイス制御用のディレクトリ|
+|localization|自己位置推定用のディレクトリ|
+|musashi_msgs|独自メッセージ用のディレクトリ|
+|perception|外界認識，知覚系のディレクトリ|
 
 ## パッケージ作成コマンド例  
 - pythonパッケージ  

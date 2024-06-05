@@ -35,6 +35,7 @@ class PlayerServerPlugin(Plugin):
     self._player_server = PlayerServer()
     self._player_server.recievedPlayerData.connect(self.onRecievedPlayerData)
       
+      
     self._timer = QTimer()
     self._timer.timeout.connect(self._widget.update)
     self._timer.start(16)
@@ -55,8 +56,9 @@ class PlayerServerPlugin(Plugin):
   
   # refereebox_clientがパブリッシュした，レフェリーボックスコマンドのサブスクライバー
   def refcmd_callback(self, msg):
-    print(msg.command, msg.target_team)
+    self._node.get_logger.info(msg.command, msg.target_team)
   
+  # PlayerServerクラスからシグナルが発行された時に実行されるスロット
   @Slot(int,dict)
   def onRecievedPlayerData(self, id, data):
     self._node.get_logger().info(id, data)

@@ -68,4 +68,4 @@ class RefBoxClient(QThread):
       targetTeam = recv_json['targetTeam']
       
       # シグナルの発行      
-      self.recievedCommand.emit(command, targetTeam)
+      self.recievedCommand.emit(recv, command, targetTeam)

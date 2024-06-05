@@ -10,7 +10,6 @@
         <statustip>Plugins related to Hibikino-Musashi.</statustip>
       </group>
       <label>PlayerServer</label>
-      <icon type="theme">face-smile</icon>
       <statustip>Player server</statustip>
     </qtgui>
   </class>

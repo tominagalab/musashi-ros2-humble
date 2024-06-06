@@ -20,6 +20,9 @@ class PlayerControllerPlugin(Plugin):
         self._widget.windowTitle() + (' (%d)' % context.serial_number()))
     
     context.add_widget(self._widget)
+    
+    self._widget.setTeamColor(3, 'cyan')
+    self._widget.setRole(3, 'alpha')
           
     self._timer = QTimer()
     self._timer.timeout.connect(self._widget.update)

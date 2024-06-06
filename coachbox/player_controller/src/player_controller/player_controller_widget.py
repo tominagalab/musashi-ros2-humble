@@ -26,9 +26,21 @@ class PlayerControllerWidget(QWidget):
     for i in range(PLAYER_NUM):
       self._pwidgets.append(QWidget())
       loadUi(ui_file, self._pwidgets[-1]) # 末尾のQWidgetインスタンスにuiファイルをロード
+      # self._pwidgets[-1].frmTeamColorDisp.setStyleSheet('background-color: magenta')
       self._layout.addWidget(self._pwidgets[-1])
       
     self.setLayout(self._layout)
     
     # オブジェクト名は間違えても動く？未調査
     self.setObjectName('PlayerControllerWidget') 
+    
+  def setTeamColor(self, id, color):
+    if color == 'cyan':
+      self._pwidgets[id-1].ledtDispColorAndRole.setStyleSheet('background-color: cyan')
+      
+    elif color == 'magenta':
+      self._pwidgets[id-1].ledtDispColorAndRole.setStyleSheet('background-color: magenta')
+  
+  def setRole(self, id, role):
+    self._pwidgets[id-1].ledtDispColorAndRole.setText(role)
+      

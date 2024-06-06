@@ -63,7 +63,7 @@ RefereeBoxとはTCPで送受信を行います．
 |SUBSTITUTION|"224.16.32.*"|
 |IS_ALIVE|"224.16.32.*"|
 
-## Hibkino-MusashiにおけるCoachBox-Player間通信  
+## CoachBox-Player間通信  
 CoachBoxとPlayerはUDPで通信を行っています．  
 - 具体的な通信処理については"musashi_player/communication/communication.cpp"を参照してください．  
   - UDPの受信処理については"recv"関数で行われています．  
@@ -104,3 +104,8 @@ CoachBoxはRefereeBoxから送られてきたコマンドに基づいて，各プレイヤーへコマンドを
 一つの変数が何文字なのかは","でsplitするまでわからない．  
 __いずれバイナリデータで送受信する方法に修正し通信速度の高速化を図る必要がある__  
 
+## 実装したい機能  
+- キッカー差動ボタン  
+- コンパス校正開始ボタン  
+- パーティクル再配布ボタン  
+- RoleとColorの可視化   

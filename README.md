@@ -19,19 +19,19 @@ pythonでのコーディングにおいてはPEP8コードスタイルに準拠する．
 <pre>
 musashi-ros2-humble（ルートディレクトリ）  
 ├── README.md
+├── basestation
 ├── behavior
-├── coachbox
 ├── hardware
 ├── localization
 ├── musashi_msgs
-└── perception 
+└── perception
 </pre>
 
 |Name|Detail|  
 |---|---|
 |README.md|このファイル|
+|basestation|レフェリーボックス・プレイヤーとの通信，GUIを含むパッケージのディレクトリ|
 |behavior|ルールベース行動決定，ステートマシン，行動選択のディレクトリ|
-|coachbox|レフェリーボックス，プレイヤーとの通信関係ディレクトリ|
 |hardware|外部デバイス制御用のディレクトリ|
 |localization|自己位置推定用のディレクトリ|
 |musashi_msgs|独自メッセージ用のディレクトリ|

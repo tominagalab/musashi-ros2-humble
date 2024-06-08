@@ -1,46 +1,46 @@
 # musashi-ros2-humble
-–{ƒpƒbƒP[ƒW‚Í Robocup Hibikino-Musashi ‚ÌROS2—pƒŠƒ|ƒWƒgƒŠ‚É‚È‚è‚Ü‚·D
-Visual Studio‚ğ—p‚¢‚½C++‚Ì‚İ‚ÌŠJ”­‚ÉŒÀŠE‚ğŠ´‚¶‚Ä‚«‚½‚½‚ßC
-ƒŒƒtƒFƒŠ[ƒ{ƒbƒNƒX‚Ìd—l•ÏX‚É‡‚í‚¹‚ÄV‚½‚ÈUbuntuƒx[ƒX‚ÌHibikino-musashi‚Æ‚·‚×‚­CŠJ”­‚ğŠJn‚·‚éD    
+æœ¬ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸ã¯ Robocup Hibikino-Musashi ã®ROS2ç”¨ãƒªãƒã‚¸ãƒˆãƒªã«ãªã‚Šã¾ã™ï¼
+Visual Studioã‚’ç”¨ã„ãŸC++ã®ã¿ã®é–‹ç™ºã«é™ç•Œã‚’æ„Ÿã˜ã¦ããŸãŸã‚ï¼Œ
+ãƒ¬ãƒ•ã‚§ãƒªãƒ¼ãƒœãƒƒã‚¯ã‚¹ã®ä»•æ§˜å¤‰æ›´ã«åˆã‚ã›ã¦æ–°ãŸãªUbuntuãƒ™ãƒ¼ã‚¹ã®Hibikino-musashiã¨ã™ã¹ãï¼Œé–‹ç™ºã‚’é–‹å§‹ã™ã‚‹ï¼    
 
-## ŠJ”­ŠÂ‹«  
-- Ubuntu 22.04  
-- ROS2 humble  
-- Visual Studio CodeiƒGƒfƒBƒ^j  
-- pythonCC++  
+## é–‹ç™ºç’°å¢ƒ  
+- OSãƒ‡ã‚£ã‚¹ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ã‚·ãƒ§ãƒ³: Ubuntu 22.04  
+- ROSãƒ‡ã‚£ã‚¹ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ã‚·ãƒ§ãƒ³: ROS2 humble  
+- Visual Studio Codeï¼ˆã‚¨ãƒ‡ã‚£ã‚¿ï¼‰  
+- pythonï¼ŒC++  
 
-## ƒR[ƒfƒBƒ“ƒO‹K–ñi–½–¼‹K‘¥j  
-python‚Å‚ÌƒR[ƒfƒBƒ“ƒO‚É‚¨‚¢‚Ä‚ÍPEP8ƒR[ƒhƒXƒ^ƒCƒ‹‚É€‹’‚·‚éD
-ˆÈ‰º‚ğQÆ‚·‚é‚±‚ÆD  
+## ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°è¦ç´„ï¼ˆå‘½åè¦å‰‡ï¼‰  
+pythonã§ã®ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ã«ãŠã„ã¦ã¯PEP8ã‚³ãƒ¼ãƒ‰ã‚¹ã‚¿ã‚¤ãƒ«ã«æº–æ‹ ã™ã‚‹ï¼
+ä»¥ä¸‹ã‚’å‚ç…§ã™ã‚‹ã“ã¨ï¼  
 `https://peps.python.org/pep-0008/#code-lay-out`  
 `https://atmarkit.itmedia.co.jp/ait/articles/2308/08/news020.html`  
 
-## ƒfƒBƒŒƒNƒgƒŠ\¬     
+## ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªæ§‹æˆ     
 <pre>
-musashi-ros2-humbleiƒ‹[ƒgƒfƒBƒŒƒNƒgƒŠj  
-„¥„Ÿ„Ÿ README.md
-„¥„Ÿ„Ÿ basestation
-„¥„Ÿ„Ÿ behavior
-„¥„Ÿ„Ÿ hardware
-„¥„Ÿ„Ÿ localization
-„¥„Ÿ„Ÿ musashi_msgs
-„¤„Ÿ„Ÿ perception
+musashi-ros2-humbleï¼ˆãƒ«ãƒ¼ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªï¼‰  
+â”œâ”€â”€ README.md
+â”œâ”€â”€ basestation
+â”œâ”€â”€ behavior
+â”œâ”€â”€ hardware
+â”œâ”€â”€ localization
+â”œâ”€â”€ musashi_msgs
+â””â”€â”€ perception
 </pre>
 
 |Name|Detail|  
 |---|---|
-|README.md|‚±‚Ìƒtƒ@ƒCƒ‹|
-|basestation|ƒŒƒtƒFƒŠ[ƒ{ƒbƒNƒXEƒvƒŒƒCƒ„[‚Æ‚Ì’ÊMCGUI‚ğŠÜ‚ŞƒpƒbƒP[ƒW‚ÌƒfƒBƒŒƒNƒgƒŠ|
-|behavior|ƒ‹[ƒ‹ƒx[ƒXs“®Œˆ’èCƒXƒe[ƒgƒ}ƒVƒ“Cs“®‘I‘ğ‚ÌƒfƒBƒŒƒNƒgƒŠ|
-|hardware|ŠO•”ƒfƒoƒCƒX§Œä—p‚ÌƒfƒBƒŒƒNƒgƒŠ|
-|localization|©ŒÈˆÊ’u„’è—p‚ÌƒfƒBƒŒƒNƒgƒŠ|
-|musashi_msgs|“Æ©ƒƒbƒZ[ƒW—p‚ÌƒfƒBƒŒƒNƒgƒŠ|
-|perception|ŠOŠE”F¯C’mŠoŒn‚ÌƒfƒBƒŒƒNƒgƒŠ|
+|README.md|ã“ã®ãƒ•ã‚¡ã‚¤ãƒ«|
+|basestation|ãƒ¬ãƒ•ã‚§ãƒªãƒ¼ãƒœãƒƒã‚¯ã‚¹ãƒ»ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨ã®é€šä¿¡ï¼ŒGUIã‚’å«ã‚€ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª|
+|behavior|ãƒ«ãƒ¼ãƒ«ãƒ™ãƒ¼ã‚¹è¡Œå‹•æ±ºå®šï¼Œã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ³ï¼Œè¡Œå‹•é¸æŠã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª|
+|hardware|å¤–éƒ¨ãƒ‡ãƒã‚¤ã‚¹åˆ¶å¾¡ç”¨ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª|
+|localization|è‡ªå·±ä½ç½®æ¨å®šç”¨ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª|
+|musashi_msgs|ç‹¬è‡ªãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ç”¨ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª|
+|perception|å¤–ç•Œèªè­˜ï¼ŒçŸ¥è¦šç³»ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª|
 
-## ƒpƒbƒP[ƒWì¬ƒRƒ}ƒ“ƒh—á  
-- pythonƒpƒbƒP[ƒW  
+## ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸ä½œæˆã‚³ãƒãƒ³ãƒ‰ä¾‹  
+- pythonãƒ‘ãƒƒã‚±ãƒ¼ã‚¸  
 ``ros2 pkg create [package name] --build-type ament_python --dependencies rclpy``  
-- C++ƒpƒbƒP[ƒW  
+- C++ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸  
 ``ros2 pkg create [package name] --build-type ament_cmake --dependencies rclcpp``  
-- python‚Ìrqtƒvƒ‰ƒOƒCƒ“ƒpƒbƒP[ƒW  
+- pythonã®rqtãƒ—ãƒ©ã‚°ã‚¤ãƒ³ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸  
 `ros2 pkg create [package name] --build-type ament_python --dependencies rclpy python_qt_binding rqt_gui rqt_gui_py rqt_py_common`

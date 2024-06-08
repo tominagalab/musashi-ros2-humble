@@ -3,7 +3,7 @@
 
 ## ディレクトリ構成  
 <pre>
-coachbox
+basestation
 ├── README.md
 ├── player_controller
 ├── player_server
@@ -17,7 +17,7 @@ coachbox
 |player_server|各プレイヤーからのデータ受信を行うパッケージ|  
 |refereebox_client| レフェリーボックスと通信を行うパッケージ|  
 
-## RefereeBox-CoachBox間通信について
+## RefereeBoxとCoachBox間通信について
 RefereeBoxとはTCPで送受信を行います．  
 ### コマンドフォーマット詳細  
 - RefereeBoxからはJSON形式の文字列データがバイナリデータで送られてきます．
@@ -66,7 +66,7 @@ RefereeBoxとはTCPで送受信を行います．
 |SUBSTITUTION|"224.16.32.*"|
 |IS_ALIVE|"224.16.32.*"|
 
-## CoachBox-Player間通信  
+## CoachBoxとPlayer間の通信について  
 CoachBoxとPlayerはUDPで通信を行っています．  
 - 具体的な通信処理については"musashi_player/communication/communication.cpp"を参照してください．  
   - UDPの受信処理については"recv"関数で行われています．  

@@ -6,8 +6,8 @@ Visual Studioを用いたC++のみの開発に限界を感じてきたため，
 ## 開発環境  
 - OSディストリビューション: Ubuntu 22.04  
 - ROSディストリビューション: ROS2 humble  
-- Visual Studio Code（エディタ）  
-- python，C++  
+- IDE: Visual Studio Code（エディタ）  
+- 言語: python，C++  
 
 ## コーディング規約（命名規則）  
 pythonでのコーディングにおいてはPEP8コードスタイルに準拠する．

@@ -9,8 +9,9 @@ Visual Studioを用いたC++のみの開発に限界を感じてきたため，
 - IDE: Visual Studio Code（エディタ）  
 - 言語: python，C++  
 
-## コーディング規約（命名規則）  
-pythonでのコーディングにおいてはPEP8コードスタイルに準拠する．
+## コーディング規約（命名規則） 
+### python   
+PEP8コードスタイルに準拠する．
 以下を参照すること．  
 `https://peps.python.org/pep-0008/#code-lay-out`  
 `https://atmarkit.itmedia.co.jp/ait/articles/2308/08/news020.html`  

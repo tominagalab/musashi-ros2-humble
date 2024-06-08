@@ -7,26 +7,55 @@ import math
 class FieldPublisher(Node):
     def __init__(self):
         super().__init__('field_publisher')
-        self.publisher = self.create_publisher(MarkerArray, 'soccer_field', 1)  # パブリッシュレートを1Hzに変更
-        timer_period = 1.0  # seconds  # タイマーを1秒に変更
+        self.publisher = self.create_publisher(MarkerArray, 'soccer_field', 1)
+        timer_period = 1.0
         self.timer = self.create_timer(timer_period, self.timer_callback)
+        
+        # パラメータを宣言
+        self.declare_parameter('field_length', 22.0)
+        self.declare_parameter('field_width', 14.0)
+        self.declare_parameter('goal_area_length', 0.75)
+        self.declare_parameter('goal_area_width', 3.9)
+        self.declare_parameter('penalty_area_length', 2.25)
+        self.declare_parameter('penalty_area_width', 6.9)
+        self.declare_parameter('line_width', 0.125)
+        
+        # ROSパラメータからフィールドのサイズを取得
+        self.field_length = self.get_parameter('field_length').get_parameter_value().double_value
+        self.field_width = self.get_parameter('field_width').get_parameter_value().double_value
+        self.goal_area_length = self.get_parameter('goal_area_length').get_parameter_value().double_value
+        self.goal_area_width = self.get_parameter('goal_area_width').get_parameter_value().double_value
+        self.penalty_area_length = self.get_parameter('penalty_area_length').get_parameter_value().double_value
+        self.penalty_area_width = self.get_parameter('penalty_area_width').get_parameter_value().double_value
+        self.line_width = self.get_parameter('line_width').get_parameter_value().double_value
     
     def timer_callback(self):
         marker_array = MarkerArray()
         marker_id = 0
         
-        # フィールドのサイズを定義（線の幅を考慮して調整）
-        field_length = 22.0  # meters (タッチライン)
-        field_width = 14.0  # meters (ゴールライン)
+        # フィールドのサイズをROSパラメータから取得した値に置き換える
+        field_length = self.field_length
+        field_width = self.field_width
+        
+        # ゴールエリアのサイズをROSパラメータから取得した値に置き換える
+        goal_area_length = self.goal_area_length
+        goal_area_width = self.goal_area_width
+        
+        # ペナルティエリアのサイズをROSパラメータから取得した値に置き換える
+        penalty_area_length = self.penalty_area_length
+        penalty_area_width = self.penalty_area_width
+
+        # ラインの幅をROSパラメータから取得した値に置き換える
+        line_width = self.line_width
         
         # タッチライン (上下)
-        marker = self.create_line_marker(marker_id, [-field_length / 2.0, -field_width / 2.0 + 0.0625], [field_length / 2.0, -field_width / 2.0 + 0.0625], width=0.125)
+        marker = self.create_line_marker(marker_id, [-field_length / 2.0, -field_width / 2.0 + line_width / 2.0], [field_length / 2.0, -field_width / 2.0 + line_width / 2.0], width=0.125)
         marker.color.r = 1.0  # Red color
         marker.color.g = 1.0  # Green color
         marker.color.b = 1.0  # Blue color
         marker_array.markers.append(marker)
         marker_id += 1
-        marker = self.create_line_marker(marker_id, [-field_length / 2.0, field_width / 2.0 - 0.0625], [field_length / 2.0, field_width / 2.0 - 0.0625], width=0.125)
+        marker = self.create_line_marker(marker_id, [-field_length / 2.0, field_width / 2.0 - line_width / 2.0], [field_length / 2.0, field_width / 2.0 - line_width / 2.0], width=0.125)
         marker.color.r = 1.0  # Red color
         marker.color.g = 1.0  # Green color
         marker.color.b = 1.0  # Blue color
@@ -34,13 +63,13 @@ class FieldPublisher(Node):
         marker_id += 1
         
         # ゴールライン (左右)
-        marker = self.create_line_marker(marker_id, [-field_length / 2.0 + 0.0625, -field_width / 2.0], [-field_length / 2.0 + 0.0625, field_width / 2.0], width=0.125)
+        marker = self.create_line_marker(marker_id, [-field_length / 2.0 + line_width / 2.0, -field_width / 2.0], [-field_length / 2.0 + line_width / 2.0, field_width / 2.0], width=0.125)
         marker.color.r = 1.0  # Red color
         marker.color.g = 1.0  # Green color
         marker.color.b = 1.0  # Blue color
         marker_array.markers.append(marker)
         marker_id += 1
-        marker = self.create_line_marker(marker_id, [field_length / 2.0 - 0.0625, -field_width / 2.0], [field_length / 2.0 - 0.0625, field_width / 2.0], width=0.125)
+        marker = self.create_line_marker(marker_id, [field_length / 2.0 - line_width / 2.0, -field_width / 2.0], [field_length / 2.0 - line_width / 2.0, field_width / 2.0], width=0.125)
         marker.color.r = 1.0  # Red color
         marker.color.g = 1.0  # Green color
         marker.color.b = 1.0  # Blue color
@@ -48,7 +77,7 @@ class FieldPublisher(Node):
         marker_id += 1
         
         # センターライン
-        marker = self.create_line_marker(marker_id, [0.0, -field_width / 2.0], [0.0, field_width / 2.0], width=0.125)
+        marker = self.create_line_marker(marker_id, [0.0, -field_width / 2.0], [0.0, field_width / 2.0], width=line_width)
         marker.color.r = 1.0  # Red color
         marker.color.g = 1.0  # Green color
         marker.color.b = 1.0  # Blue color
@@ -56,8 +85,8 @@ class FieldPublisher(Node):
         marker_id += 1
         
         # センターサークル
-        center_diameter = 4.0 - 0.125*2  # meters (直径 4m - 線幅の分)
-        marker = self.create_circle_marker(marker_id, center_diameter, width=0.125)
+        center_diameter = 4.0 - line_width  # meters (直径 4m - 線幅の分)
+        marker = self.create_circle_marker(marker_id, center_diameter, width=line_width)
         marker.color.r = 1.0  # Red color
         marker.color.g = 1.0  # Green color
         marker.color.b = 1.0  # Blue color
@@ -65,24 +94,22 @@ class FieldPublisher(Node):
         marker_id += 1
         
         # ゴールエリア (左)
-        goal_area_width = 3.9  # meters
-        goal_area_length = 0.75  # meters
-        goal_area_start_x_left = field_length / 2.0 - 0.0625
+        goal_area_start_x_left = field_length / 2.0 - line_width / 2.0
         goal_area_end_x_left = goal_area_start_x_left - goal_area_length
         goal_area_y = goal_area_width / 2.0
-        marker = self.create_line_marker(marker_id, [goal_area_start_x_left, -goal_area_y], [goal_area_end_x_left, -goal_area_y], width=0.125)
+        marker = self.create_line_marker(marker_id, [goal_area_start_x_left, -goal_area_y], [goal_area_end_x_left, -goal_area_y], width=line_width)
         marker.color.r = 1.0  # Red color
         marker.color.g = 1.0  # Green color
         marker.color.b = 1.0  # Blue color
         marker_array.markers.append(marker)
         marker_id += 1
-        marker = self.create_line_marker(marker_id, [goal_area_start_x_left, goal_area_y], [goal_area_end_x_left, goal_area_y], width=0.125)
+        marker = self.create_line_marker(marker_id, [goal_area_start_x_left, goal_area_y], [goal_area_end_x_left, goal_area_y], width=line_width)
         marker.color.r = 1.0  # Red color
         marker.color.g = 1.0  # Green color
         marker.color.b = 1.0  # Blue color
         marker_array.markers.append(marker)
         marker_id += 1
-        marker = self.create_line_marker(marker_id, [goal_area_end_x_left, -goal_area_y], [goal_area_end_x_left, goal_area_y], width=0.125)
+        marker = self.create_line_marker(marker_id, [goal_area_end_x_left, -goal_area_y], [goal_area_end_x_left, goal_area_y], width=line_width)
         marker.color.r = 1.0  # Red color
         marker.color.g = 1.0  # Green color
         marker.color.b = 1.0  # Blue color
@@ -90,21 +117,21 @@ class FieldPublisher(Node):
         marker_id += 1
         
         # ゴールエリア (右)
-        goal_area_start_x_right = -field_length / 2.0 + 0.0625
+        goal_area_start_x_right = -field_length / 2.0 + line_width / 2.0
         goal_area_end_x_right = goal_area_start_x_right + goal_area_length
-        marker = self.create_line_marker(marker_id, [goal_area_start_x_right, -goal_area_y], [goal_area_end_x_right, -goal_area_y], width=0.125)
+        marker = self.create_line_marker(marker_id, [goal_area_start_x_right, -goal_area_y], [goal_area_end_x_right, -goal_area_y], width=line_width)
         marker.color.r = 1.0  # Red color
         marker.color.g = 1.0  # Green color
         marker.color.b = 1.0  # Blue color
         marker_array.markers.append(marker)
         marker_id += 1
-        marker = self.create_line_marker(marker_id, [goal_area_start_x_right, goal_area_y], [goal_area_end_x_right, goal_area_y], width=0.125)
+        marker = self.create_line_marker(marker_id, [goal_area_start_x_right, goal_area_y], [goal_area_end_x_right, goal_area_y], width=line_width)
         marker.color.r = 1.0  # Red color
         marker.color.g = 1.0  # Green color
         marker.color.b = 1.0  # Blue color
         marker_array.markers.append(marker)
         marker_id += 1
-        marker = self.create_line_marker(marker_id, [goal_area_end_x_right, -goal_area_y], [goal_area_end_x_right, goal_area_y], width=0.125)
+        marker = self.create_line_marker(marker_id, [goal_area_end_x_right, -goal_area_y], [goal_area_end_x_right, goal_area_y], width=line_width)
         marker.color.r = 1.0  # Red color
         marker.color.g = 1.0  # Green color
         marker.color.b = 1.0  # Blue color
@@ -112,24 +139,22 @@ class FieldPublisher(Node):
         marker_id += 1
         
         # ペナルティエリア (左)
-        penalty_area_length = 2.25  # meters
-        penalty_area_width = 6.9  # meters
-        penalty_area_start_x_left = field_length / 2.0 - 0.0625
+        penalty_area_start_x_left = field_length / 2.0 - line_width / 2.0
         penalty_area_end_x_left = penalty_area_start_x_left - penalty_area_length
         penalty_area_y = penalty_area_width / 2.0
-        marker = self.create_line_marker(marker_id, [penalty_area_start_x_left, -penalty_area_y], [penalty_area_end_x_left, -penalty_area_y], width=0.125)
+        marker = self.create_line_marker(marker_id, [penalty_area_start_x_left, -penalty_area_y], [penalty_area_end_x_left, -penalty_area_y], width=line_width)
         marker.color.r = 1.0  # Red color
         marker.color.g = 1.0  # Green color
         marker.color.b = 1.0  # Blue color
         marker_array.markers.append(marker)
         marker_id += 1
-        marker = self.create_line_marker(marker_id, [penalty_area_start_x_left, penalty_area_y], [penalty_area_end_x_left, penalty_area_y], width=0.125)
+        marker = self.create_line_marker(marker_id, [penalty_area_start_x_left, penalty_area_y], [penalty_area_end_x_left, penalty_area_y], width=line_width)
         marker.color.r = 1.0  # Red color
         marker.color.g = 1.0  # Green color
         marker.color.b = 1.0  # Blue color
         marker_array.markers.append(marker)
         marker_id += 1
-        marker = self.create_line_marker(marker_id, [penalty_area_end_x_left, -penalty_area_y], [penalty_area_end_x_left, penalty_area_y], width=0.125)
+        marker = self.create_line_marker(marker_id, [penalty_area_end_x_left, -penalty_area_y], [penalty_area_end_x_left, penalty_area_y], width=line_width)
         marker.color.r = 1.0  # Red color
         marker.color.g = 1.0  # Green color
         marker.color.b = 1.0  # Blue color
@@ -137,21 +162,21 @@ class FieldPublisher(Node):
         marker_id += 1
         
         # ペナルティエリア (右)
-        penalty_area_start_x_right = -field_length / 2.0 + 0.0625
+        penalty_area_start_x_right = -field_length / 2.0 + line_width / 2.0
         penalty_area_end_x_right = penalty_area_start_x_right + penalty_area_length
-        marker = self.create_line_marker(marker_id, [penalty_area_start_x_right, -penalty_area_y], [penalty_area_end_x_right, -penalty_area_y], width=0.125)
+        marker = self.create_line_marker(marker_id, [penalty_area_start_x_right, -penalty_area_y], [penalty_area_end_x_right, -penalty_area_y], width=line_width)
         marker.color.r = 1.0  # Red color
         marker.color.g = 1.0  # Green color
         marker.color.b = 1.0  # Blue color
         marker_array.markers.append(marker)
         marker_id += 1
-        marker = self.create_line_marker(marker_id, [penalty_area_start_x_right, penalty_area_y], [penalty_area_end_x_right, penalty_area_y], width=0.125)
+        marker = self.create_line_marker(marker_id, [penalty_area_start_x_right, penalty_area_y], [penalty_area_end_x_right, penalty_area_y], width=line_width)
         marker.color.r = 1.0  # Red color
         marker.color.g = 1.0  # Green color
         marker.color.b = 1.0  # Blue color
         marker_array.markers.append(marker)
         marker_id += 1
-        marker = self.create_line_marker(marker_id, [penalty_area_end_x_right, -penalty_area_y], [penalty_area_end_x_right, penalty_area_y], width=0.125)
+        marker = self.create_line_marker(marker_id, [penalty_area_end_x_right, -penalty_area_y], [penalty_area_end_x_right, penalty_area_y], width=line_width)
         marker.color.r = 1.0  # Red color
         marker.color.g = 1.0  # Green color
         marker.color.b = 1.0  # Blue color
@@ -159,7 +184,7 @@ class FieldPublisher(Node):
         marker_id += 1
         
         self.publisher.publish(marker_array)
-    
+        
     def create_line_marker(self, marker_id, start, end, width):
         marker = Marker()
         marker.header.frame_id = "map"

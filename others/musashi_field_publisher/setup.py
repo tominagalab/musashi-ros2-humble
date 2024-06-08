@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'field_viewer'
+package_name = 'musashi_field_publisher'
 
 setup(
     name=package_name,
@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'draw_field = field_viewer.draw_field:main',
+            'field_publisher = musashi_field_publisher.field_publisher:main',
         ],
     },
 )

@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
 from visualization_msgs.msg import Marker, MarkerArray
-from geometry_msgs.msg import Point
+from geometry_msgs.msg import Point, Pose, Quaternion
 import math
 
 class FieldPublisher(Node):
@@ -47,6 +47,31 @@ class FieldPublisher(Node):
 
         # ラインの幅をROSパラメータから取得した値に置き換える
         line_width = self.line_width
+        
+        # フィールド平面を緑色にするための矩形を追加
+        marker = Marker()
+        marker.header.frame_id = 'map'
+        marker.header.stamp = self.get_clock().now().to_msg()
+        marker.ns = "soccer_field"
+        marker.id = marker_id
+        marker.type = Marker.CUBE
+        marker.action = Marker.ADD
+        marker.scale.x = self.field_length  # 平面の幅
+        marker.scale.y = self.field_width  # 平面の高さ
+        marker.scale.z = 0.01  # 平面の厚さ
+        marker.color.r = 0.0  # 色を緑に設定
+        marker.color.g = 0.5
+        marker.color.b = 0.0
+        marker.color.a = 1.0  # 透明度
+        marker.pose.position.x = 0.0
+        marker.pose.position.y = 0.0
+        marker.pose.position.z = -0.01
+        marker.pose.orientation.x = 0.0
+        marker.pose.orientation.y = 0.0
+        marker.pose.orientation.z = 0.0
+        marker.pose.orientation.w = 1.0
+        marker_array.markers.append(marker)
+        marker_id += 1
         
         # タッチライン (上下)
         marker = self.create_line_marker(marker_id, [-field_length / 2.0, -field_width / 2.0 + line_width / 2.0], [field_length / 2.0, -field_width / 2.0 + line_width / 2.0], width=0.125)

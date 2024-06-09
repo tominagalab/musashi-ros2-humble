@@ -7,19 +7,20 @@ from python_qt_binding.QtCore import QTimer, Slot
 from python_qt_binding.QtWidgets import QErrorMessage
 
 # from refereebox_client.refereebox_client_widget import RefereeBoxClientWidget
-from refereebox_client.refbox_client import RefBoxClient
+from musashi_rqt_refereebox_client.refbox_client import RefBoxClient
 
 from musashi_msgs.msg import RefereeCmd
 
-PKG_NAME = 'refereebox_client'
+PKG_NAME = 'musashi_rqt_refereebox_client'
+UI_FILE_NAME = 'refereebox_client.ui'
 
-class RefereeBoxClientPlugin(Plugin):
+class RqtRefereeBoxClient(Plugin):
   def __init__(self, context):
     # 親クラス(Pluginクラス)のコンストラクタ呼び出し
-    super(RefereeBoxClientPlugin, self).__init__(context)
+    super(RqtRefereeBoxClient, self).__init__(context)
     
     # 自分の名前を設定
-    self.setObjectName('RefereeBoxClientPlugin')
+    self.setObjectName('RqtRefereeBoxClient')
     # コンテキストとノードのインスタンスを取得
     self._context = context
     self._node = context.node
@@ -50,7 +51,7 @@ class RefereeBoxClientPlugin(Plugin):
     # パッケージ名からパッケージのディレクトリパスを取得
     _, package_path = get_resource('packages', PKG_NAME)
     # .uiファイルへのパスを作成，取得
-    ui_file = os.path.join(package_path, 'share', PKG_NAME, 'resource', 'refereebox_client_widget.ui')
+    ui_file = os.path.join(package_path, 'share', PKG_NAME, 'resource', UI_FILE_NAME)
     # .uiファイルをQWidget型メンバ変数にロード
     loadUi(ui_file, self._widget)
     

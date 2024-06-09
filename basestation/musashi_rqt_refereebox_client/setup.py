@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'refereebox_client'
+package_name = 'musashi_rqt_refereebox_client'
 
 setup(
     name=package_name,
@@ -10,7 +10,7 @@ setup(
     data_files=[
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
-        ('share/' + package_name + '/resource', ['resource/refereebox_client_widget.ui']),
+        ('share/' + package_name + '/resource', ['resource/refereebox_client.ui']),
         ('share/' + package_name, ['package.xml']),
         ('share/' + package_name, ['plugin.xml']),
         ('lib/' + package_name, ['scripts/refereebox_client'])

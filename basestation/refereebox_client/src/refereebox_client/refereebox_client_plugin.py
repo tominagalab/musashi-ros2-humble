@@ -18,39 +18,57 @@ class RefereeBoxClientPlugin(Plugin):
     # 親クラス(Pluginクラス)のコンストラクタ呼び出し
     super(RefereeBoxClientPlugin, self).__init__(context)
     
-    # 自分の名前をセット
+    # 自分の名前を設定
     self.setObjectName('RefereeBoxClientPlugin')
     # コンテキストとノードのインスタンスを取得
     self._context = context
     self._node = context.node
     
     # ウィジェットインスタンスを作成
-    # self._widget = RefereeBoxClientWidget()
-    self._widget = QWidget()
-    _, package_path = get_resource('packages', PKG_NAME)
-    ui_file = os.path.join(package_path, 'share', PKG_NAME, 'resource', 'refereebox_client_widget.ui')
-    loadUi(ui_file, self._widget)
-    
-    # 複数立ち上げた時の対策処理でウィンドウ名を変更している
-    if context.serial_number() > 1:
-      self._widget.setWindowTitle(
-        self._widget.windowTitle() + (' (%d)' % context.serial_number()))
-    
-    # コンテキストのウィジェットを追加
-    # これがないと画面が表示されない
-    context.add_widget(self._widget)  
-    
-    # GUI画面更新用のタイマ割り込み
-    self._timer = QTimer()
-    self._timer.timeout.connect(self._widget.update) # timeoutシグナルをupdateスロットに接続
-    self._timer.start(16) # 16msec周期で画面更新
+    # メンバ変数_widgetに.uiファイルが書き込まれる
+    self.create_ui()
     
     # GUIシグナルスロット接続
     # connectボタンの状態変化時のシグナルスロット接続
     self._widget.chckConnect.stateChanged.connect(self.onStateChangedChckConnect)
     
     # パブリッシャー作成
+    # レフェリーからのコマンドをRefereeCmdメッセージでパブリッシュするためのパブリッシャーを定義
     self._pub_refcmd = self._node.create_publisher(RefereeCmd, '/referee_cmd', 5)
+    
+    # コンテキストに作成したウィジェットを追加
+    # これをしないとGUI画面が表示されない
+    self._context.add_widget(self._widget)  
+    
+    # GUIスレッドのスタート
+    self.start_ui_thread()
+  
+  # ウィジェット作成
+  def create_ui(self):
+    # Qwidget型のメンバ変数作成
+    self._widget = QWidget()
+    # パッケージ名からパッケージのディレクトリパスを取得
+    _, package_path = get_resource('packages', PKG_NAME)
+    # .uiファイルへのパスを作成，取得
+    ui_file = os.path.join(package_path, 'share', PKG_NAME, 'resource', 'refereebox_client_widget.ui')
+    # .uiファイルをQWidget型メンバ変数にロード
+    loadUi(ui_file, self._widget)
+    
+    # 複数立ち上げた時の対策処理でウィンドウ名を変更している
+    if self._context.serial_number() > 1:
+      self._widget.setWindowTitle(
+        self._widget.windowTitle() + (' (%d)' % self._context.serial_number()))
+  
+  def start_ui_thread(self):
+    # QTimerのtimeoutシグナルが発行されるたびにQWidgetのupdateスロットが実行される
+    # これをしないと各ウィジェットのシグナルが発行された時に認識されない
+
+    # GUIイベント更新のためのタイマ割り込み
+    self._timer = QTimer()
+    # timeoutシグナルをupdateスロットに接続
+    self._timer.timeout.connect(self._widget.update) 
+    # 16msec周期（33Hz）で画面更新
+    self._timer.start(16) 
   
   # シャットダウン時処理
   def shutdown_plugin(self):

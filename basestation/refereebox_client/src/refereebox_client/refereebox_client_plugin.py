@@ -1,11 +1,17 @@
+import os
+from ament_index_python.resources import get_resource
+from python_qt_binding import loadUi
 from qt_gui.plugin import Plugin
+from python_qt_binding.QtWidgets import QWidget
 from python_qt_binding.QtCore import QTimer, Slot
 from python_qt_binding.QtWidgets import QErrorMessage
 
-from refereebox_client.refereebox_client_widget import RefereeBoxClientWidget
+# from refereebox_client.refereebox_client_widget import RefereeBoxClientWidget
 from refereebox_client.refbox_client import RefBoxClient
 
 from musashi_msgs.msg import RefereeCmd
+
+PKG_NAME = 'refereebox_client'
 
 class RefereeBoxClientPlugin(Plugin):
   def __init__(self, context):
@@ -19,7 +25,11 @@ class RefereeBoxClientPlugin(Plugin):
     self._node = context.node
     
     # ウィジェットインスタンスを作成
-    self._widget = RefereeBoxClientWidget()
+    # self._widget = RefereeBoxClientWidget()
+    self._widget = QWidget()
+    _, package_path = get_resource('packages', PKG_NAME)
+    ui_file = os.path.join(package_path, 'share', PKG_NAME, 'resource', 'refereebox_client_widget.ui')
+    loadUi(ui_file, self._widget)
     
     # 複数立ち上げた時の対策処理でウィンドウ名を変更している
     if context.serial_number() > 1:

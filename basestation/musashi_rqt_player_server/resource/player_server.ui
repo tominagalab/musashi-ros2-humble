@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>PlayerServerWidget</class>
- <widget class="QWidget" name="PlayerServerWidget">
+ <widget class="QWidget" name="PlayerServer">
   <property name="geometry">
    <rect>
     <x>0</x>

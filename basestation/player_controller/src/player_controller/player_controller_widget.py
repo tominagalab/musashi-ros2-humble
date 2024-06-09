@@ -5,6 +5,7 @@ from ament_index_python.resources import get_resource
 from python_qt_binding import loadUi
 from python_qt_binding.QtWidgets import QWidget, QHBoxLayout
 from python_qt_binding.QtCore import Qt
+from qt_material import apply_stylesheet
 
 PLAYER_NUM = 5
 
@@ -30,6 +31,7 @@ class PlayerControllerWidget(QWidget):
       self._layout.addWidget(self._pwidgets[-1])
       
     self.setLayout(self._layout)
+    # apply_stylesheet(self, theme='light_blue.xml')
     
     # オブジェクト名は間違えても動く？未調査
     self.setObjectName('PlayerControllerWidget') 

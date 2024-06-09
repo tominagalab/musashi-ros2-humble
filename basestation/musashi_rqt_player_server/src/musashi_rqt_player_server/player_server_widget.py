@@ -13,7 +13,7 @@ class PlayerServerWidget(QWidget):
     super(PlayerServerWidget, self).__init__()
     
     # パッケージ名も書き間違えないように
-    pkg_name = 'player_server'
+    pkg_name = 'musashi_rqt_player_server'
     _, package_path = get_resource('packages', pkg_name)
     # UIをロードするけどファイル名を間違えないように
     ui_file = os.path.join(

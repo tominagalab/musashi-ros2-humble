@@ -1,16 +1,16 @@
 from qt_gui.plugin import Plugin
 from python_qt_binding.QtCore import QTimer, Slot
 
-from player_server.player_server_widget import PlayerServerWidget
-from player_server.player_server import PlayerServer
+from musashi_rqt_player_server.player_server_widget import PlayerServerWidget
+from musashi_rqt_player_server.player_server import PlayerServer
 
 from musashi_msgs.msg import RefereeCmd
 
-class PlayerServerPlugin(Plugin):
+class RqtPlayerServer(Plugin):
   def __init__(self, context):
-    super(PlayerServerPlugin, self).__init__(context)
+    super(RqtPlayerServer, self).__init__(context)
     
-    self.setObjectName('PlayerServerPlugin')
+    self.setObjectName('RqtPlayerServer')
     self._context = context
     self._node = context.node
     
